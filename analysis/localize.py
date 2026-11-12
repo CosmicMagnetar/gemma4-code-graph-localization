@@ -39,22 +39,75 @@ TASKS_PATH = find_tasks_file()
 ROOT = os.path.dirname(TASKS_PATH)
 
 
-def find_dir(name):
-    for base in [ROOT, os.path.dirname(ROOT)]:
-        p = os.path.join(base, name)
-        if os.path.isdir(p):
-            return p
-    hits = glob.glob(os.path.join(os.path.dirname(ROOT), "**", name), recursive=True)
-    hits = [h for h in hits if os.path.isdir(h)]
-    if not hits:
-        raise FileNotFoundError(name)
-    return hits[0]
+import gzip
+import tarfile
+import zipfile
+
+# Kaggle may mount the data with a different layout or naming than the data page describes,
+# so index every graph/embedding file under the input root by its task-id stem.
+DATA_ROOT = os.path.dirname(ROOT) if os.path.basename(ROOT) in ("published", "data") else ROOT
+if DATA_ROOT in ("/kaggle/input", "/kaggle", "/"):
+    DATA_ROOT = ROOT
 
 
-GRAPH_DIR = find_dir("graphs")
-EMB_DIR = find_dir("embeddings")
+def show_tree(root, depth=3):
+    for dirpath, dirnames, filenames in os.walk(root):
+        lvl = dirpath[len(root):].count(os.sep)
+        if lvl >= depth:
+            dirnames[:] = []
+            continue
+        ex = ", ".join(sorted(filenames)[:4])
+        print(f"{'  ' * lvl}{os.path.basename(dirpath) or dirpath}/  ({len(filenames)} files) {ex}")
+
+
+def extract_archives(root):
+    """Unpack graphs/embeddings archives (if the data ships them zipped) into the working dir."""
+    dest = os.path.join(OUT_DIR, "extracted")
+    for dirpath, _, filenames in os.walk(root):
+        for f in filenames:
+            low = f.lower()
+            if not any(k in low for k in ("graph", "embed")):
+                continue
+            p = os.path.join(dirpath, f)
+            if low.endswith(".zip"):
+                print("extracting", p)
+                zipfile.ZipFile(p).extractall(dest)
+            elif low.endswith((".tgz", ".tar.gz", ".tar")):
+                print("extracting", p)
+                tarfile.open(p).extractall(dest)
+    return dest
+
+
+def index_files(roots):
+    gidx, eidx = {}, {}
+    for root in roots:
+        for dirpath, _, filenames in os.walk(root):
+            for f in filenames:
+                p = os.path.join(dirpath, f)
+                if f.endswith(".json.gz"):
+                    gidx.setdefault(f[:-8], p)
+                elif f.endswith(".json") and f != "tasks.json":
+                    gidx.setdefault(f[:-5], p)
+                elif f.endswith(".npz"):
+                    eidx.setdefault(f[:-4], p)
+    return gidx, eidx
+
+
+INDEX_ROOT = "/kaggle/input" if os.path.isdir("/kaggle/input") else DATA_ROOT
+print("data root:", DATA_ROOT, " index root:", INDEX_ROOT)
+show_tree(INDEX_ROOT, depth=4)
 tasks = [json.loads(l) for l in open(TASKS_PATH) if l.strip()]
-print(f"tasks={len(tasks)}  root={ROOT}\ngraphs={GRAPH_DIR}\nembeddings={EMB_DIR}")
+GIDX, EIDX = index_files([INDEX_ROOT])
+if min(sum(t["instance_id"] in GIDX for t in tasks), sum(t["instance_id"] in EIDX for t in tasks)) < len(tasks) // 2:
+    GIDX2, EIDX2 = index_files([extract_archives(INDEX_ROOT)])
+    GIDX2.update(GIDX)
+    EIDX2.update(EIDX)
+    GIDX, EIDX = GIDX2, EIDX2
+n_g = sum(t["instance_id"] in GIDX for t in tasks)
+n_e = sum(t["instance_id"] in EIDX for t in tasks)
+print(f"tasks={len(tasks)}  graphs found={n_g}  embeddings found={n_e}")
+if n_g < len(tasks) // 2:
+    raise RuntimeError("Graph files not found for most tasks. Copy the folder tree printed above and send it.")
 
 # %% [markdown]
 # ## 1. Parse reference patches into hunks
@@ -122,7 +175,10 @@ def path_to_module(path):
 
 # %%
 def load_graph(iid):
-    g = json.load(open(os.path.join(GRAPH_DIR, f"{iid}.json")))
+    if iid not in GIDX:
+        raise FileNotFoundError(iid)
+    p = GIDX[iid]
+    g = json.load(gzip.open(p, "rt") if p.endswith(".gz") else open(p))
     ids = [n["id"] for n in g["nodes"]]
     text = {n["id"]: (n.get("text") or "") for n in g["nodes"]}
     adj = defaultdict(set)
@@ -141,7 +197,9 @@ def load_graph(iid):
 
 
 def load_emb(iid, ids):
-    z = np.load(os.path.join(EMB_DIR, f"{iid}.npz"))
+    if iid not in EIDX:
+        return {}, 0
+    z = np.load(EIDX[iid])
     keys = set(z.files)
     vec, has = {}, 0
     for i in ids:
