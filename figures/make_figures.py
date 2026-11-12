@@ -117,3 +117,69 @@ print("TF-IDF hit@67 (cost of a median 2-hop walk):", round(hits(ok, "tfidf", 67
 print("hit@k for k=1..6:", {k: {m: round(hits(ok, m, k), 3) for m in ("tfidf", "graph", "tfidf+graph")} for k in range(1, 7)})
 reach = [r for r in ok if isinstance(r["min_hop"], int)]
 print("reachable:", len(reach), " of which >=3 hops:", sum(1 for r in reach if r["min_hop"] >= 3))
+
+# ---------------- TagTrail (Gemma 4 read-once tag layer) ----------------
+if "kg-tags" in S["hit_at_k"]:
+    kgm = ["tfidf", "tfidf-expanded", "kg-tags", "tfidf+graph", "tfidf+graph+kg"]
+    kl = {"tfidf": "TF-IDF", "tfidf-expanded": "TF-IDF + Gemma query\n(no code tags)", "kg-tags": "TagTrail tags\nonly",
+          "tfidf+graph": "RRF TF-IDF\n+ graph", "tfidf+graph+kg": "RRF TF-IDF + graph\n+ TagTrail"}
+    print("\n| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR | Top-1 in edited module |")
+    print("|---|---|---|---|---|---|---|")
+    for m in kgm:
+        h = S["hit_at_k"][m]
+        print(f"| {kl[m].replace(chr(10), ' ')} | {h['1']:.3f} | {h['5']:.3f} | {h['10']:.3f} | {h['20']:.3f} | "
+              f"{S['mrr'][m]:.3f} | {S['top1_module_hit'][m]:.3f} |")
+    na = S["no_anchor"]
+    print(f"\nNo-anchor subset n={na['n']}")
+    print("| Method | Hit@1 | Hit@10 | Hit@20 | MRR |\n|---|---|---|---|---|")
+    for m in kgm:
+        print(f"| {kl[m].replace(chr(10), ' ')} | {na[m]['hit@1']:.3f} | {na[m]['hit@10']:.3f} | {na[m]['hit@20']:.3f} | {na[m]['mrr']:.3f} |")
+    wa = [r for r in ok if r["min_hop"] != "no_anchor"]
+    print(f"\nWith-anchor subset n={len(wa)}")
+    for m in kgm:
+        print(f"| {kl[m].replace(chr(10), ' ')} | {hits(wa, m, 1):.3f} | {hits(wa, m, 10):.3f} | {hits(wa, m, 20):.3f} |")
+    ml, mln = S["module_level"], S["module_level_no_anchor"]
+    print(f"\nModule level (n={ml['n']}, median modules={ml['median_modules']}):", {m: ml[m] for m in ("kg-tags", "tfidf")})
+    print(f"Module level, no anchor (n={mln['n']}):", {m: mln[m] for m in ("kg-tags", "tfidf")})
+    print("tagging meta:", ml["kg_meta"])
+    # paired comparison on all tasks: wins/losses of tfidf+graph+kg vs tfidf+graph by rank
+    w = sum(1 for r in ok if (r["rank"]["tfidf+graph+kg"] or 10**9) < (r["rank"]["tfidf+graph"] or 10**9))
+    l = sum(1 for r in ok if (r["rank"]["tfidf+graph+kg"] or 10**9) > (r["rank"]["tfidf+graph"] or 10**9))
+    print(f"paired ranks, +TagTrail vs without: better in {w}, worse in {l}, tied {len(ok)-w-l}")
+    w = sum(1 for r in ok if (r["rank"]["kg-tags"] or 10**9) < (r["rank"]["tfidf-expanded"] or 10**9))
+    l = sum(1 for r in ok if (r["rank"]["kg-tags"] or 10**9) > (r["rank"]["tfidf-expanded"] or 10**9))
+    print(f"paired ranks, tags-only vs Gemma-expanded TF-IDF: better in {w}, worse in {l}")
+
+    # Figure 3: hit@10 by subset for the key methods
+    fig, ax = plt.subplots(figsize=(6.6, 3.4), dpi=160)
+    subs = [("All tasks", ok), ("Issue names a symbol", wa), ("Issue names no symbol", [r for r in ok if r["min_hop"] == "no_anchor"])]
+    bw = 0.16
+    cols = ["#4C72B0", "#937860", "#55A868", "#C44E52", "#DD8452"]
+    for j, m in enumerate(kgm):
+        ys = [hits(sub, m, 10) for _, sub in subs]
+        xs = [i + (j - 2) * bw for i in range(len(subs))]
+        ax.bar(xs, ys, bw, label=kl[m].replace("\n", " "), color=cols[j])
+        for x, y in zip(xs, ys):
+            ax.text(x, y + 0.01, f"{y:.2f}", ha="center", fontsize=6)
+    ax.set_xticks(range(len(subs)), [f"{n}\n(n={len(s)})" for n, s in subs])
+    ax.set_ylabel("Hit@10")
+    ax.set_ylim(0, 1)
+    ax.grid(axis="y", alpha=0.3)
+    ax.legend(fontsize=6.5, frameon=False, ncol=2, loc="upper right")
+    fig.tight_layout()
+    fig.savefig(os.path.join(HERE, "fig3_tagtrail_subsets.png"))
+
+    # Figure 4: module-level hit@k, tags vs TF-IDF, all and no-anchor
+    fig, ax = plt.subplots(figsize=(6.0, 3.2), dpi=160)
+    kk = [1, 3, 5, 10]
+    for m, c, ls in [("kg-tags", "#DD8452", "-"), ("tfidf", "#4C72B0", "-")]:
+        ax.plot(kk, [ml[m][f"hit@{k}"] for k in kk], ls, color=c, marker="o", label=f"{'TagTrail tags' if m=='kg-tags' else 'TF-IDF'} (all)")
+        ax.plot(kk, [mln[m][f"hit@{k}"] for k in kk], "--", color=c, marker="s", label=f"{'TagTrail tags' if m=='kg-tags' else 'TF-IDF'} (no anchor)")
+    ax.set_xticks(kk)
+    ax.set_xlabel("Modules opened (k)")
+    ax.set_ylabel("Tasks with an edited module in top-k")
+    ax.set_ylim(0, 1)
+    ax.grid(alpha=0.3)
+    ax.legend(fontsize=7, frameon=False)
+    fig.tight_layout()
+    fig.savefig(os.path.join(HERE, "fig4_module_level.png"))
