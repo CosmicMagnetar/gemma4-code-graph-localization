@@ -127,32 +127,42 @@ TRIVIAL = {"pass", "else:", "try:", "return", "finally:", "continue", "break", '
 
 
 def parse_patch(patch):
-    """Return list of dicts: file, is_new, hunks[{header, removed, context}]."""
+    """Return list of dicts: file, is_new, hunks[{header, removed, context, added}].
+
+    Handles patches with or without `diff --git` headers (the competition patches start at `--- a/...`)."""
     files, cur, hunk = [], None, None
-    for line in patch.splitlines():
+    lines = patch.splitlines()
+    for n, line in enumerate(lines):
+        nxt = lines[n + 1] if n + 1 < len(lines) else ""
         if line.startswith("diff --git"):
-            cur = {"file": None, "is_new": False, "hunks": []}
+            hunk = None
+            continue
+        if line.startswith("--- ") and nxt.startswith("+++ "):
+            cur = {"file": None, "is_new": line.strip() == "--- /dev/null", "hunks": []}
             files.append(cur)
             hunk = None
-        elif cur is None:
             continue
-        elif line.startswith("--- "):
-            if line.strip() == "--- /dev/null":
-                cur["is_new"] = True
-        elif line.startswith("+++ "):
-            p = line[4:].strip()
+        if cur is None:
+            continue
+        if line.startswith("+++ ") and hunk is None:
+            p = line[4:].strip().split("\t")[0]
             cur["file"] = p[2:] if p.startswith("b/") else p
         elif line.startswith("@@"):
-            m = re.match(r"@@[^@]*@@(.*)", line)
-            hunk = {"header": (m.group(1) if m else "").strip(), "removed": [], "context": [], "added": []}
+            m = re.match(r"@@ -(\d+)(?:,(\d+))? \+\d+(?:,\d+)? @@(.*)", line)
+            old_len = int(m.group(2)) if m and m.group(2) is not None else 1
+            hunk = {"header": (m.group(3) if m else "").strip(), "removed": [], "context": [], "added": [],
+                    "old_len": old_len}
             cur["hunks"].append(hunk)
         elif hunk is not None:
             if line.startswith("-"):
                 hunk["removed"].append(line[1:])
             elif line.startswith("+"):
                 hunk["added"].append(line[1:])
-            elif line.startswith(" "):
+            elif line.startswith(" ") or line == "":
                 hunk["context"].append(line[1:])
+    for f in files:  # a file whose every hunk starts from an empty original is newly created
+        if f["hunks"] and all(h["old_len"] == 0 for h in f["hunks"]):
+            f["is_new"] = True
     return [f for f in files if f["file"]]
 
 
@@ -167,7 +177,7 @@ def useful(lines):
 
 def is_test_path(p):
     p = p.lower()
-    return "/tests/" in "/" + p or os.path.basename(p).startswith("test_") or p.startswith("docs/")
+    return "/tests/" in "/" + p or os.path.basename(p).startswith("test_") or p.startswith(("docs/", "docs_src/"))
 
 
 def path_to_module(path):
