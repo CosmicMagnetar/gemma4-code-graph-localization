@@ -177,16 +177,29 @@ if not DRY_RUN:
 def generate(prompts, max_new_tokens=96, bs=12):
     if DRY_RUN:
         return [f"BUG: fake\nTAGS: {' '.join(re.findall(r'[a-z]{4,}', p.lower())[-6:-3])}, fake tag" for p in prompts]
-    outs = []
-    for i in range(0, len(prompts), bs):
-        chunk = prompts[i:i + bs]
+    def run(chunk):
         texts = [processor.apply_chat_template([{"role": "user", "content": p}], tokenize=False,
                                                add_generation_prompt=True, enable_thinking=False) for p in chunk]
         enc = tok(texts, return_tensors="pt", padding=True).to(model.device)
         with torch.no_grad():
             gen = model.generate(**enc, max_new_tokens=max_new_tokens, do_sample=False)
-        for row in gen[:, enc["input_ids"].shape[1]:]:
-            outs.append(tok.decode(row, skip_special_tokens=True).strip())
+        return [tok.decode(row, skip_special_tokens=True).strip() for row in gen[:, enc["input_ids"].shape[1]:]]
+
+    def safe(chunk):  # halve the batch on CUDA OOM instead of crashing
+        try:
+            return run(chunk)
+        except torch.cuda.OutOfMemoryError:
+            torch.cuda.empty_cache()
+            if len(chunk) == 1:
+                return [""]
+            h = len(chunk) // 2
+            return safe(chunk[:h]) + safe(chunk[h:])
+
+    outs = []
+    for i in range(0, len(prompts), bs):
+        chunk = prompts[i:i + bs]
+        outs.extend(safe(chunk))
+        torch.cuda.empty_cache()
         if (i // bs) % 10 == 0:
             print(f"  {i + len(chunk)}/{len(prompts)}  t={time.time()-T0:.0f}s", flush=True)
     return outs
@@ -212,8 +225,13 @@ mod_raw = generate([MODULE_PROMPT.format(repo=unique[h][0], module=unique[h][1],
 mod_tags = {h: parse_tags(r) for h, r in zip(keys, mod_raw)}
 print(f"tagged {len(mod_tags)} modules, empty={sum(1 for v in mod_tags.values() if not v)}  t={time.time()-T0:.0f}s")
 
-iss_raw = generate([ISSUE_PROMPT.format(repo=t["repo"], report=(t.get("problem_statement") or "")[:6000]) for t in tasks],
-                   max_new_tokens=160, bs=8)
+json.dump({"modules_by_hash": mod_tags, "raw": dict(zip(keys, mod_raw))}, open(os.path.join(OUT_DIR, "module_tags_partial.json"), "w"))
+order = sorted(range(len(tasks)), key=lambda i: len(tasks[i].get("problem_statement") or ""))
+iss_out = generate([ISSUE_PROMPT.format(repo=tasks[i]["repo"], report=(tasks[i].get("problem_statement") or "")[:4000])
+                    for i in order], max_new_tokens=160, bs=4)
+iss_raw = [None] * len(tasks)
+for i, r in zip(order, iss_out):
+    iss_raw[i] = r
 issues = {t["instance_id"]: {"bug": parse_bug(r), "tags": parse_tags(r), "raw": r} for t, r in zip(tasks, iss_raw)}
 print(f"tagged {len(issues)} issues, empty={sum(1 for v in issues.values() if not v['tags'])}  t={time.time()-T0:.0f}s")
 

@@ -12,6 +12,8 @@
  "competition_sources": [
   "gemma-4-developer-agent"
  ],
- "kernel_sources": [],
+ "kernel_sources": [
+  "cosmicmagnetar/gemma-4-read-once-tag-layer"
+ ],
  "model_sources": []
 }
