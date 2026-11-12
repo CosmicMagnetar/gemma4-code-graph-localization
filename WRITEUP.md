@@ -151,7 +151,7 @@ The 34 tasks without anchors are where a language model is actually needed: turn
 
 - **Hardware:** Kaggle CPU notebook, with no GPU and no internet; the competition data is attached. Figures were made on a laptop (Python 3, numpy, matplotlib).
 - **Notebook:** https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
-- **Code:** REPO-LINK (code, `results.json`, figure script).
+- **Code:** https://github.com/CosmicMagnetar/gemma4-code-graph-localization (code, `results.json`, figure script).
 
 ```bash
 # Run the analysis on Kaggle (or open the notebook above and click Run All)

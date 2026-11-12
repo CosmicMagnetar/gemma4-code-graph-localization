@@ -1,7 +1,7 @@
 # Where Do the Fixes Live? Code-Graph Fault Localization for Small Local Coding Agents
 
 Code and data products for a paper submitted to the Kaggle **Google – The Gemma 4 Developer Agent Paper Track**.
-The paper itself is [WRITEUP.md](WRITEUP.md).
+The paper itself is [WRITEUP.md](WRITEUP.md). Public notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
 
 This is a study of the 129 public tasks in the Gemma 4 Developer Agent competition. It needs no training and makes no model calls. It measures how far each reference fix is, in call-graph hops, from the symbols named in the issue. It also measures how well four rankers put an edited function near the top of the list: issue-text TF-IDF, graph hops, the provided embeddings, and reciprocal-rank fusion of these.
 
