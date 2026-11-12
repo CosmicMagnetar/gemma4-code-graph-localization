@@ -119,6 +119,11 @@ print(f"tasks={len(tasks)}  graphs found={n_g}  embeddings found={n_e}")
 if n_g < len(tasks) // 2:
     raise RuntimeError("Graph files not found for most tasks. Copy the folder tree printed above and send it.")
 
+KG_PATH = next(iter(sorted(glob.glob(os.path.join(os.environ.get("KG_DIR", "/kaggle/input"), "**", "kg_tags.json"),
+                                    recursive=True))), None)
+KG = json.load(open(KG_PATH)) if KG_PATH else None
+print("Gemma 4 tag layer:", KG_PATH, KG["meta"]["model"] if KG else "-")
+
 # %% [markdown]
 # ## 1. Parse reference patches into hunks
 
@@ -348,6 +353,24 @@ def tfidf_scores(issue, docs):
     return out
 
 
+def module_of(nid, node_ids):
+    """Graphs hold only classes and functions, so a symbol's module is the longest dotted prefix that is not a node."""
+    parts = nid.split(".")
+    mod = None
+    for i in range(1, len(parts)):
+        p = ".".join(parts[:i])
+        if p in node_ids:
+            break
+        mod = p
+    return mod
+
+
+def tag_text(tags):
+    """Tags -> plain words with a light plural strip, so 'cookies' meets 'cookie'."""
+    words = re.findall(r"[a-z0-9]+", " ".join(tags).lower())
+    return " ".join(w[:-1] if len(w) > 4 and w.endswith("s") and not w.endswith("ss") else w for w in words)
+
+
 def rank_of_first_gold(order, gold):
     for r, i in enumerate(order, 1):
         if i in gold:
@@ -439,7 +462,37 @@ for ti, t in enumerate(tasks):
     fused2 = rrf([o_tfidf, o_graph])
     o_tg = order_by(cands, fused2, tf)
 
-    row["rank"] = {
+    orders = {"tfidf": o_tfidf, "graph": o_graph, "embedding": o_emb, "tfidf+graph": o_tg, "hybrid": o_hybrid}
+    if KG and iid in KG["modules"] and iid in KG["issues"]:
+        node_ids = set(ids)
+        mods = KG["modules"][iid]
+        itags = KG["issues"][iid]
+        mnames = sorted(mods)
+        mscore = dict(zip(mnames, tfidf_scores(tag_text(itags["tags"]), [tag_text(mods[m]) for m in mnames]))) if mnames else {}
+        sym_mod = {i: module_of(i, node_ids) for i in cands}
+        kg = {i: mscore.get(sym_mod[i], -1.0) for i in cands}
+        orders["kg-tags"] = order_by(cands, kg, tf)
+        orders["tfidf+graph+kg"] = order_by(cands, rrf([o_tfidf, o_graph, orders["kg-tags"]]), tf)
+        # ablation: Gemma's reading of the bug used only as query expansion for code TF-IDF (no tag layer on code)
+        q2 = issue + "\n" + itags.get("bug", "") + "\n" + ", ".join(itags["tags"])
+        tf2 = dict(zip(cands, tfidf_scores(q2, docs)))
+        orders["tfidf-expanded"] = order_by(cands, tf2, {i: 0 for i in cands})
+        # module level: tag ranking of modules vs best TF-IDF symbol per module
+        gold_mods = {sym_mod[g] for g in gold if sym_mod.get(g)}
+        tf_mod = defaultdict(float)
+        for i in cands:
+            if sym_mod[i]:
+                tf_mod[sym_mod[i]] = max(tf_mod[sym_mod[i]], tf[i])
+        all_mods = sorted(set(m for m in sym_mod.values() if m))
+        def mrank(score):
+            o = sorted(all_mods, key=lambda m: (-score.get(m, -1.0), m))
+            return next((r for r, m in enumerate(o, 1) if m in gold_mods), None)
+        row["module_rank"] = {"kg-tags": mrank(mscore), "tfidf": mrank(tf_mod), "n_modules": len(all_mods),
+                              "n_tagged": len(mnames)}
+        row["issue_tags"] = itags["tags"]
+        row["issue_bug"] = itags.get("bug", "")
+    row["rank"] = {m: rank_of_first_gold(o, gold) for m, o in orders.items()}
+    row["rank_legacy"] = {
         "tfidf": rank_of_first_gold(o_tfidf, gold),
         "graph": rank_of_first_gold(o_graph, gold),
         "embedding": rank_of_first_gold(o_emb, gold),
@@ -450,10 +503,9 @@ for ti, t in enumerate(tasks):
     N, g = len(cands), len(gold)
     row["random_hit"] = {str(k): 1 - (math.comb(N - g, k) / math.comb(N, k) if k <= N - g else 0.0) for k in KS}
     # file-level: does the top-1 node live in an edited module?
-    gold_mods = {path_to_module(f["file"]) for f in files if f["file"].endswith(".py") and not is_test_path(f["file"])}
-    row["top1_module_hit"] = {m: any(o[0] == gm or o[0].startswith(gm + ".") for gm in gold_mods)
-                              for m, o in [("tfidf", o_tfidf), ("graph", o_graph), ("embedding", o_emb),
-                                           ("tfidf+graph", o_tg), ("hybrid", o_hybrid)]}
+    file_mods = {path_to_module(f["file"]) for f in files if f["file"].endswith(".py") and not is_test_path(f["file"])}
+    row["top1_module_hit"] = {m: any(o[0] == gm or o[0].startswith(gm + ".") for gm in file_mods)
+                              for m, o in orders.items()}
     row["status"] = "ok"
     rows.append(row)
     if ti % 10 == 0:
@@ -466,6 +518,9 @@ for ti, t in enumerate(tasks):
 # %%
 ok = [r for r in rows if r["status"] == "ok"]
 methods = ["tfidf", "graph", "embedding", "tfidf+graph", "hybrid"]
+if KG:
+    methods += ["kg-tags", "tfidf+graph+kg", "tfidf-expanded"]
+    ok = [r for r in ok if all(m in r["rank"] for m in methods)]
 
 
 def hit_at(m, k, subset):
@@ -493,6 +548,21 @@ summary = {
     "median_gold": float(np.median([r["n_gold"] for r in ok])) if ok else 0,
     "runtime_s": round(time.time() - T0, 1),
 }
+no_anchor = [r for r in ok if r.get("min_hop") == "no_anchor"]
+summary["no_anchor"] = {"n": len(no_anchor), **{m: {"hit@1": hit_at(m, 1, no_anchor), "hit@10": hit_at(m, 10, no_anchor),
+                                                    "hit@20": hit_at(m, 20, no_anchor), "mrr": mrr(m, no_anchor)}
+                                                for m in methods}}
+if KG:
+    mr = [r for r in ok if r.get("module_rank")]
+    summary["module_level"] = {
+        "n": len(mr), "kg_meta": {k: v for k, v in KG["meta"].items() if not k.endswith("prompt")},
+        "median_modules": float(np.median([r["module_rank"]["n_modules"] for r in mr])) if mr else 0,
+        **{m: {f"hit@{k}": sum(1 for r in mr if r["module_rank"][m] and r["module_rank"][m] <= k) / max(1, len(mr))
+               for k in (1, 3, 5, 10)} for m in ("kg-tags", "tfidf")}}
+    for name, sub in [("module_level_no_anchor", [r for r in mr if r.get("min_hop") == "no_anchor"])]:
+        summary[name] = {"n": len(sub), **{m: {f"hit@{k}": sum(1 for r in sub if r["module_rank"][m] and
+                                                              r["module_rank"][m] <= k) / max(1, len(sub))
+                                               for k in (1, 3, 5, 10)} for m in ("kg-tags", "tfidf")}}
 for repo in sorted(set(r["repo"] for r in ok)):
     sub = [r for r in ok if r["repo"] == repo]
     summary["per_repo"][repo] = {"n": len(sub), **{m: {"hit@1": hit_at(m, 1, sub), "hit@10": hit_at(m, 10, sub),
