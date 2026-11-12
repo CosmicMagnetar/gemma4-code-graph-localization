@@ -1,0 +1,34 @@
+[{"stream_name":"stderr","time":6.609320301,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.6093658699999995,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.609370248,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.609372802,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.168878255,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.168904181,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.168909432,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.168912929,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":22.910522943,"data":"tasks=129 graphs found=129\n"}
+,{"stream_name":"stdout","time":30.033199042,"data":"modules per task (median) = 30, unique module outlines to tag = 247  t=8s\n"}
+,{"stream_name":"stdout","time":52.672290152,"data":"gpus=2 total_mem=29.1GiB -\u003e google/gemma-4/transformers/gemma-4-e4b-it\n"}
+,{"stream_name":"stdout","time":144.276600415,"data":"model loaded dtype=torch.bfloat16 t=122s\n"}
+,{"stream_name":"stdout","time":160.376777095,"data":"  12/247  t=138s\n"}
+,{"stream_name":"stdout","time":394.592466118,"data":"  132/247  t=372s\n"}
+,{"stream_name":"stdout","time":912.507252881,"data":"  247/247  t=890s\n"}
+,{"stream_name":"stdout","time":912.704041193,"data":"tagged 247 modules, empty=0  t=890s\n"}
+,{"stream_name":"stdout","time":926.690863067,"data":"  4/129  t=904s\n"}
+,{"stream_name":"stdout","time":1088.490820625,"data":"  44/129  t=1066s\n"}
+,{"stream_name":"stdout","time":1280.46055482,"data":"  84/129  t=1258s\n"}
+,{"stream_name":"stdout","time":1546.24378786,"data":"  124/129  t=1524s\n"}
+,{"stream_name":"stdout","time":1594.678384435,"data":"tagged 129 issues, empty=0  t=1572s\n"}
+,{"stream_name":"stdout","time":1594.720661718,"data":"wrote kg_tags.json {'model': 'google/gemma-4/transformers/gemma-4-e4b-it', 'unique_modules': 247, 'n_tasks': 129, 'runtime_s': 1572.3, 'decoding': 'greedy, thinking off', 'module_prompt': 'You are indexing the Python library {repo} so that bug reports can be routed to the right code.\\nBelow is an outline of the module `{module}` (its functions and classes, with signatures and docstring first lines).\\n\\n{body}\\n\\nWrite 8 to 12 short tags, each 2 to 4 lowercase words, naming the behaviours, concepts and features this module implements\\n(for example: \"cookie parsing\", \"redirect handling\", \"progress bar rendering\"). Prefer plain words over code names.\\nAnswer with one line only, in this format:\\nTAGS: tag one, tag two, tag three', 'issue_prompt': 'You are triaging a bug report for the Python library {repo}. You cannot see the code.\\n\\n\u003creport\u003e\\n{report}\\n\u003c/report\u003e\\n\\nFirst, say in one sentence what behaviour is wrong or missing. Then write 8 to 12 short tags, each 2 to 4 lowercase words,\\nnaming the behaviours, concepts and features of {repo} that the fix will most likely touch (for example: \"cookie parsing\",\\n\"redirect handling\", \"progress bar rendering\"). Prefer plain words over code names.\\nAnswer with exactly two lines, in this format:\\nBUG: \u003cone sentence\u003e\\nTAGS: tag one, tag two, tag three'}\n"}
+,{"stream_name":"stdout","time":1594.720690056,"data":"fastapi_15661 The release preparation automation seems to be incorrectly triggered or configured. ['release preparation', 'automation script', 'build process', 'dependency management', 'version bumping', 'continuous integration', 'deployment pipeline']\n"}
+,{"stream_name":"stdout","time":1594.720709317,"data":"fastapi_15588 FastAPI should validate that Server Sent Event fields like `id` and `event` do not contain multi-line content to prevent sending broken data to clients. ['server sent event', 'data validation', 'request handling', 'event field', 'client communication', 'data integrity', 'application error', 'response formatting']\n"}
+,{"stream_name":"stdout","time":1594.720714662,"data":"fastapi_15589 The library currently accepts underscore-separated header names even when `convert_underscores=True` is set, which should only accept hyphen-separated names by default. ['header parsing', 'request handling', 'default behavior', 'configuration options', 'string conversion', 'request validation', 'api input', 'http headers']\n"}
+,{"stream_name":"stderr","time":1600.383081316,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1600.383113405,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1600.532833099,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1600.53285674,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1601.378757524,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":1601.455275722,"data":"[NbConvertApp] Writing 33764 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":1603.950493267,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1604.479172651,"data":"[NbConvertApp] Writing 349707 bytes to __results__.html\n"}
+]

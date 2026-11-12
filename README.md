@@ -1,4 +1,4 @@
-# Where Do the Fixes Live? Code-Graph Fault Localization for Small Local Coding Agents
+# TagTrail: Where Small Coding Agents Get Lost, and What Gemma 4 Should Read First
 
 Code and data products for a paper submitted to the Kaggle **Google – The Gemma 4 Developer Agent Paper Track**.
 The paper itself is [WRITEUP.md](WRITEUP.md). Public notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
@@ -13,6 +13,9 @@ This is a study of the 129 public tasks in the Gemma 4 Developer Agent competiti
 | `analysis/localize.ipynb` | The same code as a notebook, generated from the `.py` cells (`# %%`). |
 | `analysis/kernel-metadata.json` | Kaggle kernel config, so the run can be pushed with the Kaggle API. |
 | `results/results.json` | Output of the Kaggle run: summary metrics and one row per task. |
+| `tagkg/tag_kg.py` (+ `.ipynb`, `kernel-metadata.json`) | Gemma 4 read-once tag layer (Kaggle GPU T4 x2). Writes `kg_tags.json`. Notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-read-once-tag-layer |
+| `results/kg_tags.json` | TagTrail index: Gemma 4 tags per module and per issue, raw outputs, prompts. |
+| `figures/make_diagram.py` | Draws the pipeline figure. |
 | `figures/make_figures.py` | Builds `figures/*.png` and prints every table in the paper from `results.json`. |
 
 ## Reproduce

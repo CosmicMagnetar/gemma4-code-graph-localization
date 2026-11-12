@@ -1,164 +1,146 @@
-# Where Do the Fixes Live? Code-Graph Fault Localization for Small Local Coding Agents
+# TagTrail: Where Small Coding Agents Get Lost, and What Gemma 4 Should Read First
 
-**Subtitle:** A training-free study of the 129 public Gemma 4 Developer Agent tasks. How far are reference fixes from the symbols an issue mentions, and which cheap rankers find them before a model reads any code?
+**Subtitle:** A gold localization map of the 129 public Gemma 4 Developer Agent tasks, a measurement of how far fixes sit from what the bug report says, and a read-once Gemma 4 tag index tested against a simple control.
 
 ## Abstract
 
-A small model running on one accelerator cannot afford to read a whole repository. Before Gemma 4 can draft a fix it must decide *where to look*, using a few tool calls and a limited context window. We measure how hard that first step is on the 129 public tasks of the Gemma 4 Developer Agent competition, using only what the competition ships: AST call graphs, 256-dimensional node embeddings and the issue text. We map each reference patch to the graph nodes it edits, extract the symbols each issue names, and measure two things. The first is the call-graph distance between named and edited symbols. The second is how high four training-free rankers place an edited symbol: identifier-aware TF-IDF, graph hops from issue anchors, similarity in the provided embedding space, and reciprocal-rank fusion.
+Small local models often fail at the first step of a fix: they open the wrong part of the repository and spend their context before reaching the bug. We measure that step on the 129 public tasks of the Gemma 4 Developer Agent competition. First, each reference patch is mapped to the graph symbols it edits. The bug report names an edited symbol in only 28 of the 115 usable tasks, and names no code symbol at all in 34. Walking the provided call graph from the named symbols gives the best first guess (hit@1 0.165), and identifier-aware TF-IDF is best once an agent can read five or more symbols (hit@10 0.496). The shipped embeddings, which the official `search_similar_code` tool can only query by symbol name, are the weakest signal.
 
-Of 115 tasks we could map, the issue names an edited symbol in only 28 (24%) and names no graph symbol at all in 34 (30%). Only 43 have an edited symbol within two hops of a named one. The graph is sparse, with a median of 0.68 `calls` edges per node, and 8 fixes cannot be reached from the issue at all. Graph hops give the best first guess (hit@1 0.165). TF-IDF is strongest once the agent can read five or more symbols (hit@10 0.496, against 0.029 for random). Fusing the two gives the best MRR (0.257). The provided embeddings, used node-to-node, are the weakest signal, and adding them to the fusion lowers every metric. Everything runs on a Kaggle CPU notebook in two minutes.
+To attack the reports that name nothing, we built **TagTrail**. Gemma 4 E4B reads an outline of every library module once (247 unique modules, 15 minutes on two T4 GPUs) and writes behaviour tags. At query time it rewrites the bug report into the same tag vocabulary. On those reports, TagTrail puts an edited module in the top 10 for 85% of tasks, against 62% for TF-IDF. Adding it to TF-IDF + graph fusion raises hit@10 from 0.426 to 0.504. A control did better still at function level: Gemma's reading of the bug, appended to the query with no code index at all, gave hit@10 0.583 overall and 0.412 on the no-name slice (TF-IDF: 0.147). We release the gold map, the tag index, all prompts and both notebooks.
 
 ## 1. Introduction
 
-<!-- REWRITE IN MY VOICE: motivation. Why localization on everyday hardware matters to you; what you saw or expected when thinking about small agents in big repos. -->
-Agents built on large hosted models can afford to explore, open many files and recover from wrong turns. A model that fits on a laptop has no such slack. Every file it opens costs context, and a wrong first guess about where the bug lives is often the whole failure: the agent edits the wrong function, tests fail, and the remaining turns go to undoing it.
+<!-- OPTIONAL: change any words here that don't sound like you -->
+I started this after watching coding agents get lost. The pattern repeats. The agent reads the bug report, picks a file that sounds right, opens it, and then opens three more. By the time it reaches the function that needs changing, half the context window is gone, and the rest goes into a patch in the wrong place. A big hosted model can absorb that waste. A 4-bit Gemma 4 on one accelerator, which is the setting of this competition, can't.
 
-The Gemma 4 Developer Agent competition anticipates this. With each repository snapshot it ships a code graph and a dense embedding per node. It also provides tools built on these, such as `get_code_neighbors`, `get_code_subgraph` and `search_similar_code`. What is not yet known is how useful these structures are for an agent's first decision. Are the functions that need editing named in the issue? If not, are they one call away, or far away? Does the embedding space place them near the named symbols?
+So before building anything I wanted numbers for that first step. Where do the real fixes live, compared with what the bug report says? How much does the provided code graph help? And what happens with reports that describe a behaviour ("the export has the wrong colours") without naming any code?
 
-We answer these questions with measurements rather than a new agent. Our contributions:
+This paper makes three contributions:
 
-1. **A gold localization map** of the public split. Each reference-patch hunk is mapped to the most specific graph node containing its edited lines, and we report how often this succeeds.
-2. **A distance profile of real fixes:** the call-graph distance from issue-named symbols to the nearest edited symbol.
-3. **A training-free localization baseline.** Lexical, graph, embedding and fused rankers are compared under one protocol against an exactly computed random baseline.
-4. **A reproducible pipeline.** One Kaggle CPU notebook produces every number, and one script turns its JSON output into every table and figure.
+1. **A gold localization map** for the public split. Each patch hunk is mapped to the symbol it edits, together with the issue's anchor symbols and the call-graph distance between them.
+2. **A measurement study** of four training-free rankers under one protocol, showing when each works and where all of them fail.
+3. **TagTrail**, a read-once Gemma 4 tag layer for that failure case. It is evaluated with a control that separates "Gemma indexed the code" from "Gemma just read the bug". Everything is released as a resource.
 
 ## 2. Related Work
 
-**Benchmarks and agents.** SWE-bench (Jimenez et al., 2024) made resolving real GitHub issues, verified by repository tests, the standard task for software-engineering agents. The competition tasks share its format: problem statement, base commit, reference patch and test patch. SWE-agent (Yang et al., 2024) showed that the agent–computer interface strongly affects success. OpenHands (Wang et al., 2024) is an open platform for such agents. AutoCodeRover (Zhang et al., 2024) added structure-aware search over classes and methods, which is close in spirit to the competition's graph tools.
+**Agents and benchmarks.** SWE-bench (Jimenez et al., 2024) made resolving real GitHub issues, checked by tests, the standard task for coding agents; the competition shares its format. SWE-agent (Yang et al., 2024) showed that the tool interface matters. OpenHands (Wang et al., 2024) is an open agent platform. AutoCodeRover (Zhang et al., 2024) searches over program structure.
 
-**Localization as a separate stage.** Agentless (Xia et al., 2024) showed that a fixed pipeline of hierarchical localization, repair and validation competes with open-ended agents, which makes localization a major lever. LocAgent (Chen et al., 2025) lets an LLM agent traverse a heterogeneous graph of files, classes and functions. RepoGraph (Ouyang et al., 2024) plugs a line-level repository graph into existing agents. Our work is complementary. Rather than proposing another graph-guided agent, we measure, on the exact graphs and embeddings given to Gemma 4 participants, how far fixes are from the issue and how much model-free use of the graph already buys.
+**Localization and repository understanding.** Agentless (Xia et al., 2024) showed that a fixed localize, repair and validate pipeline competes with open-ended agents. LocAgent (Chen et al., 2025) lets an LLM walk a code graph. RepoGraph (Ouyang et al., 2024) adds a line-level repository graph to agents. CodexGraph (Liu et al., 2024) lets the model query a graph database. LingmaAgent (Ma et al., 2024; first released as RepoUnderstander) is closest to TagTrail: it condenses a repository into a knowledge graph with LLM-written summaries. We differ in three ways. Our index is written by a small local model, in a fixed tag vocabulary that the bug report is mapped into too. We score it against gold labels on the issues that name no code. And we compare it with a query-rewriting control.
 
-**IR bug localization.** Before LLMs, bug localization was framed as retrieving source files for a bug report. BLUiR (Saha et al., 2013) showed that using code structure, such as class, method and identifier fields, improves over flat text retrieval. Our TF-IDF ranker is a function-level descendant of that work. We combine rankers with reciprocal rank fusion (Cormack et al., 2009) at its standard constant, so nothing is tuned on the evaluation tasks.
+**IR bug localization.** BLUiR (Saha et al., 2013) showed that structured retrieval over code fields beats flat text; our TF-IDF ranker descends from that line of work. Rankers are fused with reciprocal rank fusion (Cormack et al., 2009) at its published constant, so nothing is tuned on the test tasks. Gemma models (Gemma Team, 2025) are open-weight models built for single accelerators.
 
-**Gemma.** Gemma models (Gemma Team, 2025) are open-weight models designed for single accelerators and consumer hardware. That is the setting behind our budget-centred evaluation.
+## 3. Data and Gold Map
 
-## 3. Method
+The public split has 129 tasks: fastapi 67, rich 48, requests 13 and httpx 1. Each task has a problem statement, a base commit and a reference patch. Each snapshot has a code graph and an embedding archive, named `<repo>_<base_commit>` on Kaggle. Graph nodes are classes and functions; the ID is the dotted path and the text is the source. Every edge is of type `calls`, and the median is 0.68 edges per node. There are no module nodes, so a symbol's module is the longest dotted prefix that is not itself a node.
 
-### 3.1 Data and gold localization
+**Gold symbols.** The patches have no `diff --git` headers, so we split files on `---`/`+++` pairs. Tests, documentation examples and new files are skipped. For each hunk, the removed lines are matched verbatim against the symbols in the edited module; for pure additions, the context lines are used instead. Each matching line scores a point, a name match with the hunk header adds 0.5, and ties go to the shortest source, so a method beats its class. Of 632 hunks, 455 (72%) map to a symbol. The 115 tasks with at least one gold symbol among the non-test candidates form the evaluation set. 49 of them edit more than one symbol.
 
-We use the public split: `tasks.jsonl` (129 tasks with problem statement, base commit and reference `patch`), one NetworkX node-link graph per repository snapshot, and one `.npz` of 256-d float32 node vectors per snapshot. In a graph, node `id` is the fully qualified symbol and `text` is its source. We do not use snapshots, test patches or any model.
+**Anchors.** A node is an anchor if the issue mentions its ID or a dotted suffix of it. It is also an anchor if its short name matches an identifier in the issue that has at least four characters, is not a generic word, and names at most ten nodes. Hints are never used.
 
-Patches change *lines*, but agent tools work on *symbols*. We parse each diff into files and hunks. We skip tests, documentation examples (`docs_src/`) and new files, since new files have no node at the base commit. For each hunk we take its removed lines, or its context lines for pure additions, and drop trivial lines such as `pass`, brackets, comments and anything under four characters. Candidate nodes are restricted to the edited module (`src/pkg/a/b.py` → `pkg.a.b`). Each candidate scores one point per probe line that appears verbatim in its source, plus 0.5 if its name matches the function in the hunk header. The top score wins, and ties go to the shortest source, so a method beats its enclosing class. A task's gold set is the union over its hunks.
+## 4. Part 1: Where Small Agents Get Lost
 
-### 3.2 Issue anchors
+All rankers order the same candidates: the non-test symbols, a median of 1,155 per task.
+- **TF-IDF** matches the issue against each symbol's ID and source, with identifiers split into words and IDF computed per repository.
+- **Graph** orders symbols by undirected hop distance from the anchors, falling back to TF-IDF when there are none.
+- **Embedding** scores the best cosine similarity to the anchors, or to the top-5 TF-IDF symbols. This matches how the official `search_similar_code` works: the harness README says it resolves a symbol name and has no text encoder.
+- **RRF** fuses rankers with k = 60.
 
-An agent's first clue is the identifiers in the issue. We extract identifier and dotted-identifier tokens from the problem statement. A node is an *anchor* if the issue mentions its full id or a dotted suffix of it. A node is also an anchor if its short name equals a mentioned identifier component that:
-- is at least four characters long,
-- is not a generic word (`self`, `request`, `value`, and so on), and
-- names at most ten nodes in the repository, so that common names do not flood the set.
+Random hit@k is computed exactly as 1 − C(N−g, k)/C(N, k).
 
-Hints are not used.
+| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR |
+|---|---|---|---|---|---|
+| TF-IDF (issue text) | 0.113 | **0.348** | **0.496** | **0.600** | 0.228 |
+| Embedding (provided vectors) | 0.113 | 0.243 | 0.278 | 0.339 | 0.170 |
+| Graph hops from anchors | **0.165** | 0.296 | 0.365 | 0.426 | 0.235 |
+| RRF: TF-IDF + graph | 0.157 | 0.330 | 0.426 | 0.557 | **0.257** |
+| RRF: all three | 0.148 | 0.296 | 0.383 | 0.522 | 0.234 |
+| Random (expected) | 0.003 | 0.015 | 0.029 | 0.056 | – |
 
-### 3.3 Rankers
-
-All rankers order the same candidates: every graph node outside test and documentation packages.
-
-- **TF-IDF.** Issue text against node id plus source. Identifiers are split on non-alphanumerics, underscores and camelCase, with sublinear term frequency and per-repository IDF.
-- **Graph.** Breadth-first search over the *undirected* call graph from all anchors, ordered by hop distance with ties broken by TF-IDF. Without anchors it falls back to TF-IDF.
-- **Embedding.** The maximum cosine similarity between a node and any seed, in the provided space. Seeds are the anchors, or the top five TF-IDF nodes when there are none. No natural-language query encoder ships with the vectors, so we use them node-to-node, as `search_similar_code` would from a symbol the agent already holds.
-- **Fusion.** Reciprocal rank fusion with k = 60 (Cormack et al., 2009), once for TF-IDF + graph and once for all three rankers. The constant is the published default and is not tuned.
-
-### 3.4 Metrics
-
-For each task and ranker we record the rank of the first gold node. We report three metrics:
-- **hit@k:** the share of tasks with a gold node in the top k.
-- **MRR:** mean reciprocal rank of the first gold node.
-- **File-level top-1:** whether the top-ranked node lies in an edited module.
-
-The random baseline is exact: with N candidates and g gold nodes, hit@k = 1 − C(N−g, k)/C(N, k). For tasks with anchors we also record the minimum hop distance to gold and the size of the 0–3-hop neighbourhood, which is how much code a graph walk must read to reach that radius.
-
-## 4. Results
-
-Every number below is printed by `figures/make_figures.py` from the `results.json` written by the Kaggle notebook (120.5 s on CPU).
-
-**Coverage.** The tasks come from fastapi (67), rich (48), requests (13) and httpx (1). Their patches touch 244 non-test Python files, 28 of them new. Of 632 hunks, 455 (72%) map to a node. 115 tasks have at least one gold node among the candidates and form the evaluation set. The other 14 only add files, only edit documentation examples, or have no mappable hunk. Graphs have a median of 3,250 nodes, of which 1,155 (39%) are non-test candidates. The median task has one gold node, but 49 tasks edit more than one (maximum 43).
-
-### 4.1 Localization accuracy
-
-| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR | Top-1 in edited module |
-|---|---|---|---|---|---|---|
-| TF-IDF (issue text) | 0.113 | **0.348** | **0.496** | **0.600** | 0.228 | 0.330 |
-| Embedding (provided vectors) | 0.104 | 0.235 | 0.278 | 0.339 | 0.164 | 0.261 |
-| Graph hops from issue anchors | **0.165** | 0.296 | 0.365 | 0.426 | 0.235 | 0.365 |
-| RRF: TF-IDF + graph | 0.157 | 0.330 | 0.426 | 0.557 | **0.257** | **0.383** |
-| RRF: all three | 0.148 | 0.296 | 0.383 | 0.522 | 0.234 | 0.348 |
-| Random (expected) | 0.003 | 0.015 | 0.029 | 0.056 | – | – |
-
-*Table 1. Function-level localization on 115 tasks.*
-
-All rankers are far above random, and which one is best depends on the reading budget (Figure 1). At k = 1, graph hops win. For k = 2–4, the TF-IDF + graph fusion leads. From k = 5 to 100, TF-IDF leads or ties, finding 60% of fixes within 20 symbols. The fusion has the best MRR and file-level top-1. Adding embeddings to the fusion lowers every column.
+*Table 1. Function-level localization on 115 tasks: share of tasks with an edited symbol in the top k.*
 
 ![Hit@k vs. reading budget](figures/fig1_hit_at_k.png)
-*Figure 1. Share of tasks with an edited symbol in the top k (log x-axis).*
+*Figure 1. Hit@k against reading budget (log x-axis).*
 
-### 4.2 How far are fixes from the issue?
+**The best ranker depends on the budget.** Graph hops win at k = 1, TF-IDF + graph fusion leads at k = 2–4, and TF-IDF leads or ties from 5 to 100. Adding the embeddings to the fusion lowers every column.
 
-![Hop distance from issue anchors to edited symbol](figures/fig2_hop_distance.png)
-*Figure 2. Shortest undirected call-graph distance from any issue anchor to the nearest edited symbol.*
+![Hop distance](figures/fig2_hop_distance.png)
+*Figure 2. Call-graph hops from the issue's anchors to the nearest edited symbol.*
 
-The distribution has two peaks. In 28 tasks the issue names an edited symbol outright, and hops 1 and 2 add only 15 more. Of the 73 reachable fixes, 30 (41%) are three or more hops away. Another 8 are unreachable, and 34 issues name no graph symbol at all. Walks grow fast: the median neighbourhood around the anchors holds 3, 13, 67 and 116 nodes at radius 0–3. Reading the whole 2-hop neighbourhood therefore costs about as much as reading the top 67 TF-IDF results. The walk covers 43/115 tasks, while TF-IDF at 67 covers 0.774 of them.
+**Fixes are either named or far away.** In 28 tasks the issue names an edited symbol outright, and hops 1–2 add only 15 more. Of the 73 reachable fixes, 30 (41%) are three or more hops out, and another 8 are unreachable. Walks also get expensive fast: the median anchor neighbourhood is 13 symbols at radius 1 and 67 at radius 2. A full 2-hop walk costs as much as reading 67 TF-IDF hits, yet it reaches 43 tasks against TF-IDF's 89 (0.774).
 
-The graph has a single edge type, `calls` (460,018 edges summed over the 129 task graphs). It has a median of 0.68 edges per node and a median candidate degree of 1. Edited symbols are better connected than typical nodes: the most-connected edited symbol has a median degree of 4 and exceeds its repository's median in 88/115 tasks.
+**No anchor, no luck.** On the 81 tasks with anchors, TF-IDF reaches hit@10 0.642. On the 34 without anchors, every ranker in Table 1 stays at hit@10 0.147 or below. That is the gap TagTrail goes after.
 
-**Anchors decide which signal works.**
+## 5. Part 2: TagTrail
 
-| Subset | n | TF-IDF H@1 / H@10 | Embedding H@1 / H@10 | Graph H@1 / H@10 | RRF TF-IDF+graph H@1 / H@10 |
-|---|---|---|---|---|---|
-| Issue names ≥1 graph symbol | 81 | 0.136 / **0.642** | 0.148 / 0.358 | **0.210** / 0.457 | 0.198 / 0.543 |
-| Issue names no graph symbol | 34 | 0.059 / 0.147 | 0.000 / 0.088 | 0.059 / 0.147 | 0.059 / 0.147 |
+<!-- OPTIONAL: say in your own words why you thought of a read-once knowledge graph -->
+The idea is to let Gemma 4 read the repository once, offline, and leave behind a small index. Later bug reports can be matched against it by meaning rather than by name.
 
-*Table 2. Without anchors the graph ranker falls back to TF-IDF, so those rows coincide by construction.*
+![TagTrail pipeline](figures/fig0_tagtrail_pipeline.png)
+*Figure 3. TagTrail: an offline read-once pass (top) and a per-report pass (bottom).*
 
-When anchors exist, graph hops give the best first guess, but TF-IDF still finds more within ten reads. When they don't, every method is weak, and none places the edit in its top ten for more than 15% of tasks. Here the bottleneck is understanding the prose issue, which none of these rankers attempts.
+**Read once.** For every library module we build an outline: each symbol's signature and the first line of its docstring, top-level symbols first, capped at 3,500 characters. Outlines are de-duplicated across the 127 snapshots by content hash, because most modules don't change between commits, which leaves only 247 to read. Gemma 4 E4B-it (bf16, greedy decoding, thinking off) writes 8–12 tags of two to four words for each one. For example, `fastapi.applications` gets "route definition, websocket handling, middleware configuration, openapi generation, …". The index is cached and reused for every task.
 
-### 4.3 Per-repository breakdown
+**Tag the bug.** Gemma 4 reads the report, writes one sentence saying what's wrong, and then gives 8–12 tags in the same style. It is told it cannot see the code and should prefer plain words over code names. One report about `convert_underscores` became "header parsing, request handling, configuration options, …".
 
-| Repo | n | TF-IDF | Embedding | Graph | RRF TF-IDF+graph | RRF all |
+**Route.** Modules are scored by TF-IDF cosine between the issue tags and each module's tags, with a light plural strip. Symbols inherit their module's score, with ties broken by plain TF-IDF. We also fuse TagTrail with TF-IDF and graph hops (RRF, k = 60).
+
+**Control.** Any gain might come from Gemma *reading the bug*, not from the index over the code. So we also append Gemma's sentence and tags to the issue and rerun plain code TF-IDF ("Gemma-expanded TF-IDF"). It uses the same model outputs but no code-side index.
+
+## 6. TagTrail Results
+
+| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR | Top-1 in edited file |
 |---|---|---|---|---|---|---|
-| fastapi/fastapi | 59 | 0.424 | 0.169 | 0.254 | 0.356 | 0.288 |
-| Textualize/rich | 43 | 0.512 | 0.302 | 0.395 | 0.419 | 0.395 |
-| psf/requests | 12 | 0.750 | 0.667 | 0.750 | 0.750 | 0.750 |
-| encode/httpx | 1 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
+| TF-IDF | 0.113 | 0.348 | 0.496 | 0.600 | 0.228 | 0.330 |
+| RRF: TF-IDF + graph | **0.157** | 0.330 | 0.426 | 0.557 | 0.257 | 0.383 |
+| TagTrail tags only | **0.157** | 0.374 | 0.426 | 0.470 | 0.241 | 0.383 |
+| RRF: TF-IDF + graph + TagTrail | 0.148 | 0.409 | 0.504 | 0.626 | **0.278** | **0.452** |
+| Control: Gemma-expanded TF-IDF | 0.122 | **0.435** | **0.583** | **0.687** | 0.262 | 0.374 |
 
-*Table 3. Hit@10 per repository. The httpx row is a single task.*
+*Table 2. Function-level results on all 115 tasks.*
 
-TF-IDF has the best hit@10 in every repository. fastapi is the hardest, and the embedding ranker falls to 0.169 there.
+![Subsets](figures/fig3_tagtrail_subsets.png)
+*Figure 4. Hit@10 on all tasks, on tasks whose issue names a symbol, and on tasks whose issue names none.*
 
-## 5. Discussion: what this means for a Gemma 4 agent
+**TagTrail finds the right module.** Ranking modules (median 249 per snapshot) by tags beats ranking them by their best TF-IDF symbol. Over all tasks it gets module hit@1 0.383 against 0.322, and hit@10 0.861 against 0.826. The gap is largest where it matters: on the 34 no-anchor tasks, module hit@5 is 0.647 against 0.500 and hit@10 is 0.853 against 0.618 (Figure 5). Matching bug reports to code by meaning works at module level.
 
-<!-- REWRITE IN MY VOICE: key insight. In your own words, what should someone building a small local agent do differently after seeing these numbers? -->
-These results suggest three concrete changes for a small agent working within a fixed context budget.
+![Module level](figures/fig4_module_level.png)
+*Figure 5. Share of tasks with an edited module among the top-k modules.*
 
-**Use the issue's identifiers as a first guess, not a search frontier.** When the issue names symbols, opening the anchors and their neighbours is the best single guess (hit@1 0.210 on those tasks). Expanding hop by hop from there wastes context. Radius 2 already costs a median of 67 symbols, and 41% of reachable fixes lie three or more hops out.
+**It helps the fusion.** Adding TagTrail to TF-IDF + graph raises hit@10 from 0.426 to 0.504, MRR from 0.257 to 0.278, and top-1 file accuracy from 0.383 to 0.452. Per task, the fused rank of the first gold symbol improves in 53 tasks and gets worse in 37.
 
-**Back the guess with lexical retrieval.** Identifier-aware TF-IDF finds half of all fixes within ten symbols and costs milliseconds and zero tokens. Unweighted RRF with graph distance gives the best overall ranking without tuning. A sensible default is to give the model a fused top-20 list before its first file read.
+**But the control wins at function level.** Gemma-expanded TF-IDF is the best ranker for k = 5 to 82, and on the no-anchor slice it nearly triples hit@10 (0.412 against 0.147). Tags alone reach 0.176 there, and the fusion with tags 0.235. Head to head, the control ranks the first gold symbol higher than tags-only in 66 tasks and lower in 37.
 
-**Do not use the provided embeddings as symbol-to-symbol search for localization.** Used this way they are the weakest signal, and they hurt the fusion. They may still serve clustering or duplicate detection, or work with a matched query encoder.
+<!-- OPTIONAL: this is the key insight; reword it in your voice if you want -->
+**What this means.** My hypothesis held halfway. A read-once tag index does route a vague bug report to the right *module* much more often. But once you are inside a module, tags are too coarse: every symbol in the module gets the same score. What carried most of the function-level gain was the step before any index, namely Gemma turning a prose complaint into words that also appear in the code. For a small agent, the practical recipe is cheap. First, ask Gemma 4 for a one-line reading of the bug plus some tags. Use those words to search the code. Use the tag index to choose which modules to open first. We have not tested that combination yet; it is the next experiment.
 
-The 34 tasks without anchors are where a language model is actually needed: turning a prose issue into likely identifiers or files. We expect Gemma 4 to add the most over these baselines there.
+## 7. The Resource: TagTrail data and harness
 
-## 6. Limitations
+We release under Apache 2.0:
 
-<!-- REWRITE IN MY VOICE: limitations. Say plainly what you would do with more time and what you are unsure about. -->
-- **No model in the loop.** We measure the localization step, not resolve rate. We did not run Gemma 4, so we cannot claim that better rankings yield more fixes. The next experiment is to give each ranker's top-k to a Gemma 4 agent and measure resolved tasks.
-- **Small public split.** 115 usable tasks from four libraries, dominated by fastapi and rich, with a single httpx task. The hidden test set may differ.
-- **Heuristic gold mapping.** 28% of hunks did not map to a node. Identical lines in several functions can mislead the mapping, and new files are excluded entirely.
-- **One reference fix.** Other correct fixes may edit other functions, so hit@k is a lower bound on useful localization.
-- **Anchor heuristic.** Name matching misses symbols described only in prose and can over-match. The ten-node ambiguity cap is a judgment call, not a tuned value.
-- **Embeddings used node-to-node.** Without a matched text encoder we cannot test issue-to-code embedding retrieval.
+- **Gold localization map** (`results.json`): for every task, the edited symbols, mapped hunks, anchors, hop distance, neighbourhood sizes and the rank from every ranker. Any team can use it to score a localization step without running a full agent.
+- **TagTrail index** (`kg_tags.json`): Gemma 4 tags for all library modules in all 129 task snapshots, plus each issue's one-line reading and tags, raw model outputs and both prompts.
+- **Harness**: a CPU evaluation notebook, a GPU tagging notebook, and a script that rebuilds every table and figure here.
 
-## 7. Reproduce
+## 8. Limitations
 
-- **Hardware:** Kaggle CPU notebook, with no GPU and no internet; the competition data is attached. Figures were made on a laptop (Python 3, numpy, matplotlib).
-- **Notebook:** https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
-- **Code:** https://github.com/CosmicMagnetar/gemma4-code-graph-localization (code, `results.json`, figure script).
+<!-- OPTIONAL -->
+- **No resolve rate.** We measure localization only. Feeding each ranking to a Gemma 4 agent and counting fixed tasks is the obvious next step.
+- **Small split.** There are 115 usable tasks, mostly fastapi and rich, and the hidden test set may differ. With 34 no-anchor tasks, one task moves hit@10 by about 3 points.
+- **Heuristic gold.** 28% of hunks did not map to a symbol, and new files are excluded. Other valid fixes may touch other functions.
+- **One model, one prompt.** E4B with greedy decoding and untuned prompts. Larger Gemma 4 models, or tags at symbol level instead of module level, may change the picture.
+
+## 9. Reproduce
+
+Evaluation runs on a Kaggle CPU in about 2 minutes. Tagging runs on Kaggle with 2× T4: about 26 minutes in total, including model load, 247 modules and 129 reports.
+
+- Evaluation notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
+- Tagging notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-read-once-tag-layer
+- Code and data: https://github.com/CosmicMagnetar/gemma4-code-graph-localization
 
 ```bash
-# Run the analysis on Kaggle (or open the notebook above and click Run All)
-kaggle kernels push -p analysis            # set "id" in analysis/kernel-metadata.json to your username first
-kaggle kernels output <user>/gemma-4-code-graph-localization -p results
-# Rebuild every table and figure in this paper
-python figures/make_figures.py results/results.json
+kaggle kernels push -p tagkg --accelerator NvidiaTeslaT4    # Gemma 4 tags -> kg_tags.json
+kaggle kernels push -p analysis                             # evaluation -> results.json
+python figures/make_figures.py results/results.json         # every table and figure
 ```
 
 ## References
@@ -167,6 +149,8 @@ python figures/make_figures.py results/results.json
 - Cormack, G. V., Clarke, C. L. A., & Buettcher, S. (2009). *Reciprocal rank fusion outperforms Condorcet and individual rank learning methods.* SIGIR. doi:10.1145/1571941.1572114
 - Gemma Team (2025). *Gemma 3 Technical Report.* arXiv:2503.19786.
 - Jimenez, C. E., Yang, J., Wettig, A., et al. (2024). *SWE-bench: Can Language Models Resolve Real-World GitHub Issues?* ICLR. arXiv:2310.06770.
+- Liu, X., Lan, B., Hu, Z., Liu, Y., et al. (2024). *CodexGraph: Bridging Large Language Models and Code Repositories via Code Graph Databases.* arXiv:2408.03910.
+- Ma, Y., Yang, Q., Cao, R., Li, B., et al. (2024). *Alibaba LingmaAgent: Improving Automated Issue Resolution via Comprehensive Repository Exploration.* arXiv:2406.01422.
 - Markowitz, E., Perozzi, B., Rózemberczki, B., et al. (2026). *Google – The Gemma 4 Developer Agent Paper Track.* Kaggle.
 - Ouyang, S., Yu, W., Ma, K., et al. (2024). *RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph.* arXiv:2410.14684.
 - Saha, R. K., Lease, M., Khurshid, S., & Perry, D. E. (2013). *Improving bug localization using structured information retrieval.* ASE. doi:10.1109/ASE.2013.6693093
