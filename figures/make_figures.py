@@ -56,7 +56,8 @@ for r in ok:
     else:
         counts[str(int(h))] += 1
 fig, ax = plt.subplots(figsize=(6.4, 3.2), dpi=160)
-bars = ax.bar(order, [counts[o] for o in order], color=["#55A868"] * 5 + ["#999999"] * 2)
+bars = ax.bar(range(len(order)), [counts[o] for o in order], color=["#55A868"] * 5 + ["#999999"] * 2)
+ax.set_xticks(range(len(order)), ["0", "1", "2", "3", "4+", "unreach-\nable", "no anchor\nin issue"])
 for b, o in zip(bars, order):
     ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 0.5, str(counts[o]), ha="center", fontsize=8)
 ax.set_xlabel("Call-graph hops from issue-mentioned symbols to nearest edited symbol")
@@ -91,3 +92,28 @@ if hood:
           {k: st.median(h[k] for h in hood) for k in ("0", "1", "2", "3")})
 deg = [(r["gold_degree"], r["median_degree"]) for r in ok]
 print("gold degree > repo median degree in", sum(1 for g, m in deg if g > m), "/", len(deg), "tasks")
+
+# Subset analysis: does the issue name any symbol in the graph?
+import statistics as st
+
+def hits(sub, m, k):
+    return sum(1 for r in sub if r["rank"][m] and r["rank"][m] <= k) / max(1, len(sub))
+
+with_a = [r for r in ok if r["min_hop"] != "no_anchor"]
+no_a = [r for r in ok if r["min_hop"] == "no_anchor"]
+print(f"\n| Subset | n | " + " | ".join(f"{labels[m]} H@1/H@10" for m in methods) + " |")
+print("|---|---|" + "---|" * len(methods))
+for name, sub in [("issue names >=1 graph symbol", with_a), ("issue names no graph symbol", no_a)]:
+    print(f"| {name} | {len(sub)} | " + " | ".join(f"{hits(sub, m, 1):.3f}/{hits(sub, m, 10):.3f}" for m in methods) + " |")
+near = [r for r in with_a if isinstance(r["min_hop"], int) and r["min_hop"] <= 2]
+print("gold within 2 hops of an anchor:", len(near), "/", len(ok))
+print("median degree of candidates (per task) median:", st.median(r["median_degree"] for r in ok),
+      " median max-gold degree:", st.median(r["gold_degree"] for r in ok))
+print("median edges/nodes:", st.median(r["n_edges"] / r["n_nodes"] for r in ok))
+print("median candidate share of nodes:", st.median(r["n_cands"] / r["n_nodes"] for r in ok))
+print("tasks with >1 gold symbol:", sum(1 for r in ok if r["n_gold"] > 1), " max gold:", max(r["n_gold"] for r in ok))
+print("edge types:", S["edge_types"])
+print("TF-IDF hit@67 (cost of a median 2-hop walk):", round(hits(ok, "tfidf", 67), 3))
+print("hit@k for k=1..6:", {k: {m: round(hits(ok, m, k), 3) for m in ("tfidf", "graph", "tfidf+graph")} for k in range(1, 7)})
+reach = [r for r in ok if isinstance(r["min_hop"], int)]
+print("reachable:", len(reach), " of which >=3 hops:", sum(1 for r in reach if r["min_hop"] >= 3))

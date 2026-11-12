@@ -1,0 +1,6051 @@
+{
+ "summary": {
+  "n_tasks": 129,
+  "n_rows": 129,
+  "n_ok": 115,
+  "n_no_gold": 14,
+  "mapping_stats": {
+   "src_files": 244,
+   "new_files": 28,
+   "hunks": 632,
+   "hunks_unmapped": 177,
+   "module_fallback": 8
+  },
+  "edge_types": {
+   "calls": 460018
+  },
+  "repos": {
+   "fastapi/fastapi": 67,
+   "psf/requests": 13,
+   "Textualize/rich": 48,
+   "encode/httpx": 1
+  },
+  "hit_at_k": {
+   "tfidf": {
+    "1": 0.11304347826086956,
+    "3": 0.25217391304347825,
+    "5": 0.34782608695652173,
+    "10": 0.4956521739130435,
+    "20": 0.6,
+    "50": 0.7478260869565218,
+    "100": 0.8347826086956521
+   },
+   "graph": {
+    "1": 0.16521739130434782,
+    "3": 0.2608695652173913,
+    "5": 0.2956521739130435,
+    "10": 0.3652173913043478,
+    "20": 0.4260869565217391,
+    "50": 0.5739130434782609,
+    "100": 0.7043478260869566
+   },
+   "embedding": {
+    "1": 0.10434782608695652,
+    "3": 0.19130434782608696,
+    "5": 0.23478260869565218,
+    "10": 0.2782608695652174,
+    "20": 0.3391304347826087,
+    "50": 0.391304347826087,
+    "100": 0.5304347826086957
+   },
+   "tfidf+graph": {
+    "1": 0.1565217391304348,
+    "3": 0.28695652173913044,
+    "5": 0.33043478260869563,
+    "10": 0.4260869565217391,
+    "20": 0.5565217391304348,
+    "50": 0.7304347826086957,
+    "100": 0.8260869565217391
+   },
+   "hybrid": {
+    "1": 0.14782608695652175,
+    "3": 0.25217391304347825,
+    "5": 0.2956521739130435,
+    "10": 0.3826086956521739,
+    "20": 0.5217391304347826,
+    "50": 0.6695652173913044,
+    "100": 0.808695652173913
+   }
+  },
+  "mrr": {
+   "tfidf": 0.22753305617770478,
+   "graph": 0.23505294026237167,
+   "embedding": 0.16374836791540212,
+   "tfidf+graph": 0.2566171935010441,
+   "hybrid": 0.23390600858247848
+  },
+  "random_hit_at_k": {
+   "1": 0.0029892401275906193,
+   "3": 0.008892604291820948,
+   "5": 0.014699111205282193,
+   "10": 0.02881594972409065,
+   "20": 0.05551211835188405,
+   "50": 0.1260895096298773,
+   "100": 0.2231978246354683
+  },
+  "top1_module_hit": {
+   "tfidf": 0.33043478260869563,
+   "graph": 0.3652173913043478,
+   "embedding": 0.2608695652173913,
+   "tfidf+graph": 0.3826086956521739,
+   "hybrid": 0.34782608695652173
+  },
+  "per_repo": {
+   "Textualize/rich": {
+    "n": 43,
+    "tfidf": {
+     "hit@1": 0.046511627906976744,
+     "hit@10": 0.5116279069767442,
+     "mrr": 0.1820292771504046
+    },
+    "graph": {
+     "hit@1": 0.13953488372093023,
+     "hit@10": 0.3953488372093023,
+     "mrr": 0.22758108096092863
+    },
+    "embedding": {
+     "hit@1": 0.11627906976744186,
+     "hit@10": 0.3023255813953488,
+     "mrr": 0.18029356950921158
+    },
+    "tfidf+graph": {
+     "hit@1": 0.13953488372093023,
+     "hit@10": 0.4186046511627907,
+     "mrr": 0.2521985780034754
+    },
+    "hybrid": {
+     "hit@1": 0.16279069767441862,
+     "hit@10": 0.3953488372093023,
+     "mrr": 0.25179247165401614
+    }
+   },
+   "encode/httpx": {
+    "n": 1,
+    "tfidf": {
+     "hit@1": 1.0,
+     "hit@10": 1.0,
+     "mrr": 1.0
+    },
+    "graph": {
+     "hit@1": 1.0,
+     "hit@10": 1.0,
+     "mrr": 1.0
+    },
+    "embedding": {
+     "hit@1": 0.0,
+     "hit@10": 1.0,
+     "mrr": 0.5
+    },
+    "tfidf+graph": {
+     "hit@1": 1.0,
+     "hit@10": 1.0,
+     "mrr": 1.0
+    },
+    "hybrid": {
+     "hit@1": 1.0,
+     "hit@10": 1.0,
+     "mrr": 1.0
+    }
+   },
+   "fastapi/fastapi": {
+    "n": 59,
+    "tfidf": {
+     "hit@1": 0.1016949152542373,
+     "hit@10": 0.423728813559322,
+     "mrr": 0.2014142893216589
+    },
+    "graph": {
+     "hit@1": 0.1016949152542373,
+     "hit@10": 0.2542372881355932,
+     "mrr": 0.15473517662809516
+    },
+    "embedding": {
+     "hit@1": 0.05084745762711865,
+     "hit@10": 0.1694915254237288,
+     "mrr": 0.09380930184442365
+    },
+    "tfidf+graph": {
+     "hit@1": 0.11864406779661017,
+     "hit@10": 0.3559322033898305,
+     "mrr": 0.19795394932202465
+    },
+    "hybrid": {
+     "hit@1": 0.06779661016949153,
+     "hit@10": 0.288135593220339,
+     "mrr": 0.1416102504539715
+    }
+   },
+   "psf/requests": {
+    "n": 12,
+    "tfidf": {
+     "hit@1": 0.3333333333333333,
+     "hit@10": 0.75,
+     "mrr": 0.45463328941589815
+    },
+    "graph": {
+     "hit@1": 0.5,
+     "hit@10": 0.75,
+     "mrr": 0.5929771856495994
+    },
+    "embedding": {
+     "hit@1": 0.3333333333333333,
+     "hit@10": 0.6666666666666666,
+     "mrr": 0.42030750104617925
+    },
+    "tfidf+graph": {
+     "hit@1": 0.3333333333333333,
+     "hit@10": 0.75,
+     "mrr": 0.49892961570593153
+    },
+    "hybrid": {
+     "hit@1": 0.4166666666666667,
+     "hit@10": 0.75,
+     "mrr": 0.5597591607565012
+    }
+   }
+  },
+  "min_hop_hist": {
+   "None": 8,
+   "4": 6,
+   "3": 14,
+   "no_anchor": 34,
+   "0": 28,
+   "2": 8,
+   "8": 1,
+   "1": 7,
+   "6": 4,
+   "5": 4,
+   "7": 1
+  },
+  "gold_is_anchor": 28,
+  "median_nodes": 3250.0,
+  "median_cands": 1155.0,
+  "median_gold": 1.0,
+  "runtime_s": 120.5
+ },
+ "rows": [
+  {
+   "instance_id": "fastapi_15661",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4263,
+   "n_edges": 2430,
+   "n_cands": 967,
+   "n_gold": 0,
+   "issue_chars": 1025,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_15588",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4256,
+   "n_edges": 2422,
+   "n_cands": 965,
+   "n_gold": 1,
+   "issue_chars": 1891,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.sse._check_id_no_null"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 3,
+    "1": 26,
+    "2": 52,
+    "3": 96
+   },
+   "gold_degree": 0,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 220,
+    "graph": 431,
+    "embedding": 730,
+    "tfidf+graph": 348,
+    "hybrid": 456
+   },
+   "random_hit": {
+    "1": 0.0010362694300518616,
+    "3": 0.0031088082901554737,
+    "5": 0.005181347150259086,
+    "10": 0.010362694300518172,
+    "20": 0.020725388601036232,
+    "50": 0.051813471502590636,
+    "100": 0.10362694300518138
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15589",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4259,
+   "n_edges": 2428,
+   "n_cands": 967,
+   "n_gold": 1,
+   "issue_chars": 1247,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.request_params_to_args"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 2,
+    "1": 4,
+    "2": 37,
+    "3": 65
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 67,
+    "embedding": 273,
+    "tfidf+graph": 2,
+    "hybrid": 19
+   },
+   "random_hit": {
+    "1": 0.0010341261633919352,
+    "3": 0.0031023784901758056,
+    "5": 0.005170630816959676,
+    "10": 0.010341261633919352,
+    "20": 0.020682523267838704,
+    "50": 0.05170630816959665,
+    "100": 0.10341261633919341
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15030",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4194,
+   "n_edges": 2392,
+   "n_cands": 945,
+   "n_gold": 3,
+   "issue_chars": 148,
+   "n_src_files_edited": 4,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.openapi.utils.get_openapi_path",
+    "fastapi.routing.APIRoute.__init__",
+    "fastapi.routing.get_request_handler"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 2,
+    "1": 25,
+    "2": 52,
+    "3": 96
+   },
+   "gold_degree": 13,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 168,
+    "graph": 73,
+    "embedding": 34,
+    "tfidf+graph": 86,
+    "hybrid": 67
+   },
+   "random_hit": {
+    "1": 0.0031746031746031633,
+    "3": 0.009503639093660143,
+    "5": 0.015805828655191534,
+    "10": 0.031444224195900206,
+    "20": 0.06222228213439096,
+    "50": 0.1506307824158355,
+    "100": 0.28532064850072647
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14962",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4106,
+   "n_edges": 2326,
+   "n_cands": 921,
+   "n_gold": 2,
+   "issue_chars": 210,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.ModelField.serialize",
+    "fastapi.routing.get_request_handler"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 6,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 73,
+    "graph": 73,
+    "embedding": 256,
+    "tfidf+graph": 73,
+    "hybrid": 73
+   },
+   "random_hit": {
+    "1": 0.0021715526601520097,
+    "3": 0.006507576830477313,
+    "5": 0.01083415946749755,
+    "10": 0.02160930935183869,
+    "20": 0.04298258037105229,
+    "50": 0.10568616343294146,
+    "100": 0.2054713685502526
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15280",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4248,
+   "n_edges": 2416,
+   "n_cands": 959,
+   "n_gold": 1,
+   "issue_chars": 64,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.websocket_route"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 101,
+    "graph": 101,
+    "embedding": 100,
+    "tfidf+graph": 101,
+    "hybrid": 76
+   },
+   "random_hit": {
+    "1": 0.0010427528675703845,
+    "3": 0.0031282586027111536,
+    "5": 0.005213764337851923,
+    "10": 0.010427528675703845,
+    "20": 0.02085505735140769,
+    "50": 0.05213764337851934,
+    "100": 0.10427528675703857
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14964",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4115,
+   "n_edges": 2332,
+   "n_cands": 922,
+   "n_gold": 1,
+   "issue_chars": 370,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.responses.UJSONResponse"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 3,
+    "1": 6,
+    "2": 18,
+    "3": 32
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 1,
+    "embedding": 5,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0010845986984815426,
+    "3": 0.0032537960954447387,
+    "5": 0.005422993492407824,
+    "10": 0.010845986984815648,
+    "20": 0.021691973969631184,
+    "50": 0.05422993492407813,
+    "100": 0.10845986984815614
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15023",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4193,
+   "n_edges": 2390,
+   "n_cands": 944,
+   "n_gold": 0,
+   "issue_chars": 112,
+   "n_src_files_edited": 0,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_14986",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4151,
+   "n_edges": 2354,
+   "n_cands": 928,
+   "n_gold": 3,
+   "issue_chars": 1000,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.setup",
+    "fastapi.openapi.docs.get_redoc_html",
+    "fastapi.openapi.docs.get_swagger_ui_html"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 32,
+    "3": 67
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 31,
+    "graph": 34,
+    "embedding": 85,
+    "tfidf+graph": 13,
+    "hybrid": 12
+   },
+   "random_hit": {
+    "1": 0.003232758620689613,
+    "3": 0.009677359390090401,
+    "5": 0.01609412174377911,
+    "10": 0.032014629991301446,
+    "20": 0.06333857201701731,
+    "50": 0.15324159068948406,
+    "100": 0.28996918612764744
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14978",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4128,
+   "n_edges": 2354,
+   "n_cands": 927,
+   "n_gold": 7,
+   "issue_chars": 112,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.__init__",
+    "fastapi.routing.APIRoute.__init__",
+    "fastapi.routing.APIRoute.get_route_handler",
+    "fastapi.routing.APIRouter.__init__",
+    "fastapi.routing.APIRouter.add_api_route",
+    "fastapi.routing.APIRouter.include_router",
+    "fastapi.routing.get_request_handler"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 12,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 32,
+    "graph": 32,
+    "embedding": 343,
+    "tfidf+graph": 32,
+    "hybrid": 35
+   },
+   "random_hit": {
+    "1": 0.007551240560949246,
+    "3": 0.022507201785442077,
+    "5": 0.03726956060151276,
+    "10": 0.07334213766808995,
+    "20": 0.1420244808348058,
+    "50": 0.3225528941065494,
+    "100": 0.551476864079351
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7505",
+   "repo": "psf/requests",
+   "n_nodes": 759,
+   "n_edges": 1884,
+   "n_cands": 299,
+   "n_gold": 4,
+   "issue_chars": 518,
+   "n_src_files_edited": 2,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests._types.SupportsItems",
+    "requests.models.PreparedRequest.prepare_body",
+    "requests.models.RequestEncodingMixin._encode_files",
+    "requests.models.RequestEncodingMixin._encode_params"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 2,
+    "1": 2,
+    "2": 2,
+    "3": 2
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 6,
+    "embedding": 4,
+    "tfidf+graph": 6,
+    "hybrid": 3
+   },
+   "random_hit": {
+    "1": 0.013377926421404673,
+    "3": 0.03973065484591598,
+    "5": 0.06555191483700384,
+    "10": 0.12782698075957488,
+    "20": 0.24298891748556173,
+    "50": 0.520986806367606,
+    "100": 0.8057750799215637
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7502",
+   "repo": "psf/requests",
+   "n_nodes": 758,
+   "n_edges": 1884,
+   "n_cands": 299,
+   "n_gold": 1,
+   "issue_chars": 67,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "requests.models.RequestEncodingMixin._encode_files"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 2,
+    "1": 6,
+    "2": 14,
+    "3": 32
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 6,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 2,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0033444816053511683,
+    "3": 0.010033444816053505,
+    "5": 0.01672240802675584,
+    "10": 0.03344481605351168,
+    "20": 0.06688963210702337,
+    "50": 0.16722408026755853,
+    "100": 0.33444816053511706
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7433",
+   "repo": "psf/requests",
+   "n_nodes": 754,
+   "n_edges": 1878,
+   "n_cands": 299,
+   "n_gold": 1,
+   "issue_chars": 498,
+   "n_src_files_edited": 1,
+   "n_anchors": 5,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "requests.models.PreparedRequest.prepare_body"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 5,
+    "1": 12,
+    "2": 92,
+    "3": 144
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 5,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0033444816053511683,
+    "3": 0.010033444816053505,
+    "5": 0.01672240802675584,
+    "10": 0.03344481605351168,
+    "20": 0.06688963210702337,
+    "50": 0.16722408026755853,
+    "100": 0.33444816053511706
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7427",
+   "repo": "psf/requests",
+   "n_nodes": 753,
+   "n_edges": 1876,
+   "n_cands": 299,
+   "n_gold": 1,
+   "issue_chars": 394,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.utils.should_bypass_proxies"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 3,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0033444816053511683,
+    "3": 0.010033444816053505,
+    "5": 0.01672240802675584,
+    "10": 0.03344481605351168,
+    "20": 0.06688963210702337,
+    "50": 0.16722408026755853,
+    "100": 0.33444816053511706
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7315",
+   "repo": "psf/requests",
+   "n_nodes": 733,
+   "n_edges": 1828,
+   "n_cands": 284,
+   "n_gold": 1,
+   "issue_chars": 694,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "requests.adapters.HTTPAdapter.request_url"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 3,
+    "1": 8,
+    "2": 52,
+    "3": 102
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 22,
+    "graph": 2,
+    "embedding": 1,
+    "tfidf+graph": 7,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.0035211267605633756,
+    "3": 0.010563380281690127,
+    "5": 0.017605633802816878,
+    "10": 0.035211267605633756,
+    "20": 0.07042253521126762,
+    "50": 0.176056338028169,
+    "100": 0.352112676056338
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7328",
+   "repo": "psf/requests",
+   "n_nodes": 733,
+   "n_edges": 1828,
+   "n_cands": 284,
+   "n_gold": 1,
+   "issue_chars": 580,
+   "n_src_files_edited": 1,
+   "n_anchors": 5,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.sessions.SessionRedirectMixin.resolve_redirects"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 5,
+    "1": 63,
+    "2": 126,
+    "3": 238
+   },
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 6,
+    "graph": 66,
+    "embedding": 62,
+    "tfidf+graph": 19,
+    "hybrid": 20
+   },
+   "random_hit": {
+    "1": 0.0035211267605633756,
+    "3": 0.010563380281690127,
+    "5": 0.017605633802816878,
+    "10": 0.035211267605633756,
+    "20": 0.07042253521126762,
+    "50": 0.176056338028169,
+    "100": 0.352112676056338
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7309",
+   "repo": "psf/requests",
+   "n_nodes": 733,
+   "n_edges": 1828,
+   "n_cands": 284,
+   "n_gold": 1,
+   "issue_chars": 406,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "requests.utils._parse_content_type_header"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 4,
+    "3": 8
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 4,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 2,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0035211267605633756,
+    "3": 0.010563380281690127,
+    "5": 0.017605633802816878,
+    "10": 0.035211267605633756,
+    "20": 0.07042253521126762,
+    "50": 0.176056338028169,
+    "100": 0.352112676056338
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_7205",
+   "repo": "psf/requests",
+   "n_nodes": 732,
+   "n_edges": 1826,
+   "n_cands": 284,
+   "n_gold": 1,
+   "issue_chars": 609,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.utils.get_netrc_auth"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 5,
+    "tfidf+graph": 1,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.0035211267605633756,
+    "3": 0.010563380281690127,
+    "5": 0.017605633802816878,
+    "10": 0.035211267605633756,
+    "20": 0.07042253521126762,
+    "50": 0.176056338028169,
+    "100": 0.352112676056338
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4070",
+   "repo": "Textualize/rich",
+   "n_nodes": 2015,
+   "n_edges": 5762,
+   "n_cands": 1158,
+   "n_gold": 16,
+   "issue_chars": 3096,
+   "n_src_files_edited": 9,
+   "n_anchors": 27,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich._emoji_replace._emoji_replace",
+    "rich.console.Console._caller_frame_info",
+    "rich.console.Console._collect_renderables",
+    "rich.console.Console.export_html",
+    "rich.console.Console.export_svg",
+    "rich.console.Console.input",
+    "rich.console.Console.log",
+    "rich.console.Console.render",
+    "rich.console._svg_hash",
+    "rich.emoji.Emoji.__init__",
+    "rich.logging.RichHandler.emit",
+    "rich.logging.RichHandler.render",
+    "rich.logging.RichHandler.render_message",
+    "rich.protocol.rich_cast",
+    "rich.repr.auto_rich_repr",
+    "rich.theme.Theme.from_file"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 27,
+    "1": 190,
+    "2": 450,
+    "3": 848
+   },
+   "gold_degree": 5,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 2,
+    "embedding": 7,
+    "tfidf+graph": 2,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.013816925734024155,
+    "3": 0.04091555536726543,
+    "5": 0.06731489671689883,
+    "10": 0.13036365256719906,
+    "20": 0.24466239348272312,
+    "50": 0.5088099073378054,
+    "100": 0.7665790594095657
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4077",
+   "repo": "Textualize/rich",
+   "n_nodes": 2017,
+   "n_edges": 5776,
+   "n_cands": 1158,
+   "n_gold": 1,
+   "issue_chars": 66,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.file_proxy.FileProxy.fileno"
+   ],
+   "min_hop": 8,
+   "hood": {
+    "0": 2,
+    "1": 4,
+    "2": 45,
+    "3": 46
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 4,
+    "graph": 666,
+    "embedding": 708,
+    "tfidf+graph": 30,
+    "hybrid": 76
+   },
+   "random_hit": {
+    "1": 0.0008635578583765513,
+    "3": 0.002590673575129543,
+    "5": 0.0043177892918825345,
+    "10": 0.008635578583765069,
+    "20": 0.01727115716753025,
+    "50": 0.04317789291882557,
+    "100": 0.08635578583765113
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4079",
+   "repo": "Textualize/rich",
+   "n_nodes": 2021,
+   "n_edges": 5786,
+   "n_cands": 1159,
+   "n_gold": 1,
+   "issue_chars": 71,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.markdown.TableDataElement.on_text"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 2,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 93,
+    "graph": 93,
+    "embedding": 347,
+    "tfidf+graph": 93,
+    "hybrid": 116
+   },
+   "random_hit": {
+    "1": 0.0008628127696289623,
+    "3": 0.0025884383088869978,
+    "5": 0.004314063848144922,
+    "10": 0.008628127696289956,
+    "20": 0.0172562553925798,
+    "50": 0.043140638481449556,
+    "100": 0.086281276962899
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4076",
+   "repo": "Textualize/rich",
+   "n_nodes": 2016,
+   "n_edges": 5774,
+   "n_cands": 1158,
+   "n_gold": 1,
+   "issue_chars": 71,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.ansi.AnsiDecoder.decode"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 693,
+    "graph": 693,
+    "embedding": 841,
+    "tfidf+graph": 693,
+    "hybrid": 910
+   },
+   "random_hit": {
+    "1": 0.0008635578583765513,
+    "3": 0.002590673575129543,
+    "5": 0.0043177892918825345,
+    "10": 0.008635578583765069,
+    "20": 0.01727115716753025,
+    "50": 0.04317789291882557,
+    "100": 0.08635578583765113
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4075",
+   "repo": "Textualize/rich",
+   "n_nodes": 2015,
+   "n_edges": 5772,
+   "n_cands": 1158,
+   "n_gold": 2,
+   "issue_chars": 101,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console.print",
+    "rich.console.Console.save_text"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 109,
+    "graph": 109,
+    "embedding": 368,
+    "tfidf+graph": 109,
+    "hybrid": 164
+   },
+   "random_hit": {
+    "1": 0.0017271157167529916,
+    "3": 0.005176868889973596,
+    "5": 0.008620651049480288,
+    "10": 0.017203983263248568,
+    "20": 0.03425869118364899,
+    "50": 0.08452716288776141,
+    "100": 0.16532244220431913
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_4006",
+   "repo": "Textualize/rich",
+   "n_nodes": 2014,
+   "n_edges": 5760,
+   "n_cands": 1158,
+   "n_gold": 1,
+   "issue_chars": 96,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.cells.split_graphemes"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 1,
+    "1": 5,
+    "2": 11,
+    "3": 32
+   },
+   "gold_degree": 5,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 11,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 2,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008635578583765513,
+    "3": 0.002590673575129543,
+    "5": 0.0043177892918825345,
+    "10": 0.008635578583765069,
+    "20": 0.01727115716753025,
+    "50": 0.04317789291882557,
+    "100": 0.08635578583765113
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14258",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4364,
+   "n_edges": 2476,
+   "n_cands": 1172,
+   "n_gold": 1,
+   "issue_chars": 418,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.routing.APIRouter.include_router"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 5,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 23,
+    "graph": 23,
+    "embedding": 264,
+    "tfidf+graph": 23,
+    "hybrid": 24
+   },
+   "random_hit": {
+    "1": 0.0008532423208190698,
+    "3": 0.0025597269624573205,
+    "5": 0.004266211604095571,
+    "10": 0.008532423208191142,
+    "20": 0.017064846416382284,
+    "50": 0.0426621160409556,
+    "100": 0.08532423208191131
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14851",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4363,
+   "n_edges": 2470,
+   "n_cands": 1176,
+   "n_gold": 3,
+   "issue_chars": 464,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.routing.APIRouter.__init__",
+    "fastapi.routing.APIRouter.api_route",
+    "fastapi.routing._merge_lifespan_context"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 3,
+    "1": 25,
+    "2": 47,
+    "3": 61
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 26,
+    "embedding": 15,
+    "tfidf+graph": 7,
+    "hybrid": 10
+   },
+   "random_hit": {
+    "1": 0.0025510204081632404,
+    "3": 0.007640038435904328,
+    "5": 0.01271171740289867,
+    "10": 0.025315250606386286,
+    "20": 0.050199613717682556,
+    "50": 0.12230436413211121,
+    "100": 0.23420640139777682
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14873",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4363,
+   "n_edges": 2472,
+   "n_cands": 1172,
+   "n_gold": 1,
+   "issue_chars": 674,
+   "n_src_files_edited": 1,
+   "n_anchors": 11,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.routing.APIRouter.__init__"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 11,
+    "1": 62,
+    "2": 75,
+    "3": 105
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 1,
+    "embedding": 18,
+    "tfidf+graph": 1,
+    "hybrid": 3
+   },
+   "random_hit": {
+    "1": 0.0008532423208190698,
+    "3": 0.0025597269624573205,
+    "5": 0.004266211604095571,
+    "10": 0.008532423208191142,
+    "20": 0.017064846416382284,
+    "50": 0.0426621160409556,
+    "100": 0.08532423208191131
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_13920",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4353,
+   "n_edges": 2466,
+   "n_cands": 1175,
+   "n_gold": 1,
+   "issue_chars": 225,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.analyze_param"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 47,
+    "graph": 47,
+    "embedding": 235,
+    "tfidf+graph": 47,
+    "hybrid": 48
+   },
+   "random_hit": {
+    "1": 0.0008510638297872797,
+    "3": 0.002553191489361728,
+    "5": 0.004255319148936176,
+    "10": 0.008510638297872353,
+    "20": 0.017021276595744705,
+    "50": 0.04255319148936165,
+    "100": 0.08510638297872342
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14794",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4338,
+   "n_edges": 2452,
+   "n_cands": 1175,
+   "n_gold": 1,
+   "issue_chars": 816,
+   "n_src_files_edited": 1,
+   "n_anchors": 4,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.utils.analyze_param"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 4,
+    "1": 21,
+    "2": 74,
+    "3": 134
+   },
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 3,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008510638297872797,
+    "3": 0.002553191489361728,
+    "5": 0.004255319148936176,
+    "10": 0.008510638297872353,
+    "20": 0.017021276595744705,
+    "50": 0.04255319148936165,
+    "100": 0.08510638297872342
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14786",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4330,
+   "n_edges": 2448,
+   "n_cands": 1174,
+   "n_gold": 1,
+   "issue_chars": 2303,
+   "n_src_files_edited": 1,
+   "n_anchors": 8,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.security.utils.get_authorization_scheme_param"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 8,
+    "1": 36,
+    "2": 72,
+    "3": 116
+   },
+   "gold_degree": 0,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 7,
+    "graph": 3,
+    "embedding": 2,
+    "tfidf+graph": 3,
+    "hybrid": 3
+   },
+   "random_hit": {
+    "1": 0.0008517887563883608,
+    "3": 0.0025553662691651935,
+    "5": 0.004258943781942026,
+    "10": 0.008517887563884163,
+    "20": 0.017035775127768327,
+    "50": 0.04258943781942082,
+    "100": 0.08517887563884152
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14492",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4330,
+   "n_edges": 2448,
+   "n_cands": 1174,
+   "n_gold": 0,
+   "issue_chars": 159,
+   "n_src_files_edited": 0,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_14479",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4269,
+   "n_edges": 2668,
+   "n_cands": 1226,
+   "n_gold": 1,
+   "issue_chars": 2455,
+   "n_src_files_edited": 1,
+   "n_anchors": 15,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.utils.analyze_param"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 15,
+    "1": 67,
+    "2": 150,
+    "3": 224
+   },
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 11,
+    "tfidf+graph": 1,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.0008156606851549286,
+    "3": 0.002446982055464897,
+    "5": 0.004078303425774865,
+    "10": 0.00815660685154973,
+    "20": 0.01631321370309946,
+    "50": 0.04078303425774876,
+    "100": 0.08156606851549753
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14463",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4275,
+   "n_edges": 2384,
+   "n_cands": 1142,
+   "n_gold": 1,
+   "issue_chars": 10095,
+   "n_src_files_edited": 1,
+   "n_anchors": 9,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.openapi.utils.get_openapi_path"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 9,
+    "1": 36,
+    "2": 102,
+    "3": 151
+   },
+   "gold_degree": 11,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 19,
+    "graph": 19,
+    "embedding": 178,
+    "tfidf+graph": 14,
+    "hybrid": 23
+   },
+   "random_hit": {
+    "1": 0.0008756567425569628,
+    "3": 0.0026269702276707774,
+    "5": 0.004378283712784592,
+    "10": 0.008756567425569184,
+    "20": 0.017513134851138368,
+    "50": 0.04378283712784592,
+    "100": 0.08756567425569173
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_12942",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3314,
+   "n_edges": 2062,
+   "n_cands": 1288,
+   "n_gold": 1,
+   "issue_chars": 1392,
+   "n_src_files_edited": 1,
+   "n_anchors": 6,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.field_annotation_is_complex"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 6,
+    "1": 33,
+    "2": 72,
+    "3": 115
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 175,
+    "graph": 99,
+    "embedding": 81,
+    "tfidf+graph": 136,
+    "hybrid": 90
+   },
+   "random_hit": {
+    "1": 0.0007763975155279379,
+    "3": 0.0023291925465838137,
+    "5": 0.0038819875776398005,
+    "10": 0.00776397515527949,
+    "20": 0.01552795031055898,
+    "50": 0.03881987577639756,
+    "100": 0.07763975155279501
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14099",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3263,
+   "n_edges": 2014,
+   "n_cands": 1273,
+   "n_gold": 6,
+   "issue_chars": 644,
+   "n_src_files_edited": 3,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.openapi",
+    "fastapi.routing.APIRouter.get",
+    "fastapi.routing.APIRouter.trace",
+    "fastapi.routing._prepare_response_content",
+    "fastapi.routing.get_request_handler",
+    "fastapi.routing.get_websocket_app"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 2,
+    "1": 9,
+    "2": 30,
+    "3": 37
+   },
+   "gold_degree": 6,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 25,
+    "embedding": 19,
+    "tfidf+graph": 8,
+    "hybrid": 16
+   },
+   "random_hit": {
+    "1": 0.004713275726630051,
+    "3": 0.014084304405138748,
+    "5": 0.02338169074173635,
+    "10": 0.046306009003509674,
+    "20": 0.09081118530332954,
+    "50": 0.21407973113658163,
+    "100": 0.3885230756887411
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14609",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4596,
+   "n_edges": 2664,
+   "n_cands": 1227,
+   "n_gold": 43,
+   "issue_chars": 144,
+   "n_src_files_edited": 18,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.main.get_schema_from_model_field",
+    "fastapi._compat.may_v1._normalize_errors",
+    "fastapi._compat.model_field.ModelField.serialize",
+    "fastapi._compat.shared._annotation_is_complex",
+    "fastapi._compat.shared.annotation_is_pydantic_v1",
+    "fastapi._compat.v1.get_model_definitions",
+    "fastapi._compat.v2.ModelField.validate",
+    "fastapi._compat.v2.get_annotation_from_field_info",
+    "fastapi._compat.v2.get_long_model_name",
+    "fastapi._compat.v2.get_model_fields",
+    "fastapi._compat.v2.get_model_name_map",
+    "fastapi.datastructures.UploadFile.__get_pydantic_json_schema__",
+    "fastapi.dependencies.utils._get_flat_fields_from_params",
+    "fastapi.dependencies.utils._get_multidict_value",
+    "fastapi.dependencies.utils._should_embed_body_fields",
+    "fastapi.dependencies.utils._validate_value_with_model_field",
+    "fastapi.dependencies.utils.analyze_param",
+    "fastapi.dependencies.utils.get_body_field",
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.dependencies.utils.is_union_of_base_models",
+    "fastapi.dependencies.utils.request_params_to_args",
+    "fastapi.encoders.jsonable_encoder",
+    "fastapi.exceptions.RequestValidationError.__init__",
+    "fastapi.openapi.models.EmailStr.__get_pydantic_json_schema__",
+    "fastapi.openapi.utils._get_openapi_operation_parameters",
+    "fastapi.openapi.utils.get_fields_from_routes",
+    "fastapi.openapi.utils.get_openapi_operation_request_body",
+    "fastapi.openapi.utils.get_openapi_path",
+    "fastapi.param_functions.Body",
+    "fastapi.param_functions.Cookie",
+    "fastapi.param_functions.File",
+    "fastapi.param_functions.Form",
+    "fastapi.param_functions.Header",
+    "fastapi.param_functions.Path",
+    "fastapi.param_functions.Query",
+    "fastapi.params.Query.__init__",
+    "fastapi.routing.APIRoute.__init__",
+    "fastapi.routing._prepare_response_content",
+    "fastapi.routing.get_request_handler",
+    "fastapi.routing.get_websocket_app",
+    "fastapi.temp_pydantic_v1_params.File.__init__",
+    "fastapi.utils.create_cloned_field",
+    "fastapi.utils.create_model_field"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 23,
+    "2": 29,
+    "3": 56
+   },
+   "gold_degree": 34,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 12,
+    "graph": 38,
+    "embedding": 7,
+    "tfidf+graph": 11,
+    "hybrid": 11
+   },
+   "random_hit": {
+    "1": 0.035044824775876116,
+    "3": 0.10157298581952678,
+    "5": 0.16361385106427995,
+    "10": 0.3009795451616407,
+    "20": 0.5128376009847827,
+    "50": 0.8381304205086602,
+    "100": 0.975825955303213
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14372",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3689,
+   "n_edges": 2444,
+   "n_cands": 1390,
+   "n_gold": 2,
+   "issue_chars": 1160,
+   "n_src_files_edited": 2,
+   "n_anchors": 5,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.utils.analyze_param",
+    "fastapi.params.Depends"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 5,
+    "1": 27,
+    "2": 33,
+    "3": 60
+   },
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 68,
+    "graph": 5,
+    "embedding": 1,
+    "tfidf+graph": 28,
+    "hybrid": 6
+   },
+   "random_hit": {
+    "1": 0.0014388489208633226,
+    "3": 0.004313439097534122,
+    "5": 0.007183885720796979,
+    "10": 0.014341874232795204,
+    "20": 0.028580159630395063,
+    "50": 0.07067348281202257,
+    "100": 0.1387572447441615
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14349",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3685,
+   "n_edges": 2442,
+   "n_cands": 1390,
+   "n_gold": 1,
+   "issue_chars": 169,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2._replace_refs"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 23,
+    "3": 38
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 365,
+    "embedding": 620,
+    "tfidf+graph": 25,
+    "hybrid": 63
+   },
+   "random_hit": {
+    "1": 0.0007194244604316058,
+    "3": 0.0021582733812949284,
+    "5": 0.003597122302158251,
+    "10": 0.007194244604316502,
+    "20": 0.014388489208633115,
+    "50": 0.03597122302158273,
+    "100": 0.07194244604316546
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14512",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4479,
+   "n_edges": 2776,
+   "n_cands": 1473,
+   "n_gold": 2,
+   "issue_chars": 289,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.BaseConfig",
+    "fastapi._compat.v2.ModelField.__post_init__"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 3,
+    "1": 11,
+    "2": 29,
+    "3": 67
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 271,
+    "graph": 83,
+    "embedding": 150,
+    "tfidf+graph": 134,
+    "hybrid": 152
+   },
+   "random_hit": {
+    "1": 0.0013577732518669228,
+    "3": 0.004070552554679918,
+    "5": 0.006779642256264928,
+    "10": 0.013536224504855476,
+    "20": 0.026980208979013542,
+    "50": 0.06675872221730272,
+    "100": 0.13121144366716841
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14487",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3944,
+   "n_edges": 2680,
+   "n_cands": 1473,
+   "n_gold": 0,
+   "issue_chars": 204,
+   "n_src_files_edited": 0,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_11355",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3818,
+   "n_edges": 2542,
+   "n_cands": 1414,
+   "n_gold": 1,
+   "issue_chars": 299,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_typed_return_annotation"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 625,
+    "graph": 625,
+    "embedding": 226,
+    "tfidf+graph": 625,
+    "hybrid": 457
+   },
+   "random_hit": {
+    "1": 0.0007072135785006761,
+    "3": 0.0021216407355021394,
+    "5": 0.0035360678925034916,
+    "10": 0.007072135785007094,
+    "20": 0.014144271570014189,
+    "50": 0.03536067892503536,
+    "100": 0.07072135785007072
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14485",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3939,
+   "n_edges": 2674,
+   "n_cands": 1472,
+   "n_gold": 2,
+   "issue_chars": 317,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_typed_return_annotation",
+    "fastapi.dependencies.utils.get_typed_signature"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 373,
+    "graph": 373,
+    "embedding": 310,
+    "tfidf+graph": 373,
+    "hybrid": 407
+   },
+   "random_hit": {
+    "1": 0.0013586956521739468,
+    "3": 0.004073315993260995,
+    "5": 0.006784241716667139,
+    "10": 0.013545392072828344,
+    "20": 0.02699841870363251,
+    "50": 0.06680330594390094,
+    "100": 0.13129747583720042
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14482",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3931,
+   "n_edges": 2662,
+   "n_cands": 1472,
+   "n_gold": 3,
+   "issue_chars": 266,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.ModelField",
+    "fastapi._compat.v2.ModelField.__post_init__",
+    "fastapi._compat.v2.get_model_fields"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 16,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 347,
+    "graph": 347,
+    "embedding": 365,
+    "tfidf+graph": 347,
+    "hybrid": 409
+   },
+   "random_hit": {
+    "1": 0.0020380434782608647,
+    "3": 0.006105819430009429,
+    "5": 0.010162526608787359,
+    "10": 0.020255967636958694,
+    "20": 0.04023653545596406,
+    "50": 0.09854469009546896,
+    "100": 0.19039288564419354
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14306",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3837,
+   "n_edges": 2564,
+   "n_cands": 1417,
+   "n_gold": 5,
+   "issue_chars": 2791,
+   "n_src_files_edited": 2,
+   "n_anchors": 16,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.exceptions.HTTPException",
+    "fastapi.exceptions.ResponseValidationError.__str__",
+    "fastapi.routing._prepare_response_content",
+    "fastapi.routing.get_request_handler",
+    "fastapi.routing.get_websocket_app"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 16,
+    "1": 31,
+    "2": 89,
+    "3": 201
+   },
+   "gold_degree": 59,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 10,
+    "graph": 18,
+    "embedding": 180,
+    "tfidf+graph": 5,
+    "hybrid": 12
+   },
+   "random_hit": {
+    "1": 0.003528581510232831,
+    "3": 0.010555862430588037,
+    "5": 0.017543441288207617,
+    "10": 0.03483979629669387,
+    "20": 0.06870170592880342,
+    "50": 0.16462595686983916,
+    "100": 0.3068194096293043
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14458",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3837,
+   "n_edges": 2564,
+   "n_cands": 1417,
+   "n_gold": 3,
+   "issue_chars": 591,
+   "n_src_files_edited": 1,
+   "n_anchors": 4,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant.is_async_gen_callable",
+    "fastapi.dependencies.models.Dependant.is_coroutine_callable",
+    "fastapi.dependencies.models.Dependant.is_gen_callable"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 4,
+    "1": 29,
+    "2": 44,
+    "3": 77
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0021171489061396764,
+    "3": 0.00634247786178066,
+    "5": 0.010555862430588037,
+    "10": 0.02103717810860173,
+    "20": 0.041777225858253386,
+    "50": 0.10223571998046121,
+    "100": 0.19725451125669702
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14459",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3826,
+   "n_edges": 2548,
+   "n_cands": 1414,
+   "n_gold": 5,
+   "issue_chars": 815,
+   "n_src_files_edited": 3,
+   "n_anchors": 6,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant._uses_scopes",
+    "fastapi.dependencies.models.SecurityRequirement",
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.dependencies.utils.get_flat_dependant",
+    "fastapi.openapi.utils.get_openapi_security_definitions"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 6,
+    "1": 17,
+    "2": 52,
+    "3": 145
+   },
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 56,
+    "embedding": 86,
+    "tfidf+graph": 21,
+    "hybrid": 26
+   },
+   "random_hit": {
+    "1": 0.0035360678925034916,
+    "3": 0.010578194644855543,
+    "5": 0.01758045098908123,
+    "10": 0.03491277024137951,
+    "20": 0.06884353851525993,
+    "50": 0.16495097579192075,
+    "100": 0.3073792165595822
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14448",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3792,
+   "n_edges": 2518,
+   "n_cands": 1413,
+   "n_gold": 2,
+   "issue_chars": 1226,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant.is_coroutine_callable",
+    "fastapi.dependencies.models.SecurityRequirement"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 283,
+    "graph": 283,
+    "embedding": 66,
+    "tfidf+graph": 283,
+    "hybrid": 221
+   },
+   "random_hit": {
+    "1": 0.0014154281670205604,
+    "3": 0.004243277217420571,
+    "5": 0.007067116556299324,
+    "10": 0.01410917241559051,
+    "20": 0.028118102043148463,
+    "50": 0.06954343419762665,
+    "100": 0.13658079869443795
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14455",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3822,
+   "n_edges": 2548,
+   "n_cands": 1414,
+   "n_gold": 1,
+   "issue_chars": 283,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.openapi.utils.get_openapi_security_definitions"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 3,
+    "1": 11,
+    "2": 46,
+    "3": 139
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 17,
+    "graph": 47,
+    "embedding": 587,
+    "tfidf+graph": 17,
+    "hybrid": 51
+   },
+   "random_hit": {
+    "1": 0.0007072135785006761,
+    "3": 0.0021216407355021394,
+    "5": 0.0035360678925034916,
+    "10": 0.007072135785007094,
+    "20": 0.014144271570014189,
+    "50": 0.03536067892503536,
+    "100": 0.07072135785007072
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_9753",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3780,
+   "n_edges": 2510,
+   "n_cands": 1413,
+   "n_gold": 1,
+   "issue_chars": 689,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant._unwrapped_call"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1122,
+    "graph": 1122,
+    "embedding": 535,
+    "tfidf+graph": 1122,
+    "hybrid": 957
+   },
+   "random_hit": {
+    "1": 0.0007077140835102247,
+    "3": 0.002123142250530785,
+    "5": 0.0035385704175513455,
+    "10": 0.00707714083510258,
+    "20": 0.014154281670205271,
+    "50": 0.03538570417551312,
+    "100": 0.07077140835102613
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14430",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3774,
+   "n_edges": 2502,
+   "n_cands": 1413,
+   "n_gold": 1,
+   "issue_chars": 335,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.serialize_sequence_value"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 54,
+    "graph": 54,
+    "embedding": 133,
+    "tfidf+graph": 54,
+    "hybrid": 52
+   },
+   "random_hit": {
+    "1": 0.0007077140835102247,
+    "3": 0.002123142250530785,
+    "5": 0.0035385704175513455,
+    "10": 0.00707714083510258,
+    "20": 0.014154281670205271,
+    "50": 0.03538570417551312,
+    "100": 0.07077140835102613
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_5077",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3775,
+   "n_edges": 2506,
+   "n_cands": 1413,
+   "n_gold": 1,
+   "issue_chars": 2679,
+   "n_src_files_edited": 1,
+   "n_anchors": 8,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_typed_return_annotation"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 8,
+    "1": 19,
+    "2": 78,
+    "3": 113
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 9,
+    "embedding": 127,
+    "tfidf+graph": 4,
+    "hybrid": 16
+   },
+   "random_hit": {
+    "1": 0.0007077140835102247,
+    "3": 0.002123142250530785,
+    "5": 0.0035385704175513455,
+    "10": 0.00707714083510258,
+    "20": 0.014154281670205271,
+    "50": 0.03538570417551312,
+    "100": 0.07077140835102613
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_9555",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3768,
+   "n_edges": 2500,
+   "n_cands": 1412,
+   "n_gold": 1,
+   "issue_chars": 2934,
+   "n_src_files_edited": 1,
+   "n_anchors": 11,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant.is_coroutine_callable"
+   ],
+   "min_hop": 6,
+   "hood": {
+    "0": 11,
+    "1": 40,
+    "2": 63,
+    "3": 76
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 49,
+    "graph": 169,
+    "embedding": 90,
+    "tfidf+graph": 75,
+    "hybrid": 66
+   },
+   "random_hit": {
+    "1": 0.0007082152974504652,
+    "3": 0.0021246458923512845,
+    "5": 0.003541076487252104,
+    "10": 0.007082152974504208,
+    "20": 0.014164305949008527,
+    "50": 0.03541076487252126,
+    "100": 0.07082152974504252
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14361",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3698,
+   "n_edges": 2456,
+   "n_cands": 1397,
+   "n_gold": 1,
+   "issue_chars": 96,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2._remap_definitions_and_field_mappings"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 28,
+    "graph": 28,
+    "embedding": 196,
+    "tfidf+graph": 28,
+    "hybrid": 23
+   },
+   "random_hit": {
+    "1": 0.0007158196134574579,
+    "3": 0.0021474588403722628,
+    "5": 0.0035790980672870676,
+    "10": 0.007158196134574135,
+    "20": 0.01431639226914816,
+    "50": 0.035790980672870454,
+    "100": 0.07158196134574091
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_13207",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3768,
+   "n_edges": 2500,
+   "n_cands": 1412,
+   "n_gold": 2,
+   "issue_chars": 354,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.get_definitions",
+    "fastapi._compat.v2.get_schema_from_model_field"
+   ],
+   "min_hop": 6,
+   "hood": {
+    "0": 2,
+    "1": 26,
+    "2": 57,
+    "3": 108
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 4,
+    "graph": 214,
+    "embedding": 170,
+    "tfidf+graph": 37,
+    "hybrid": 50
+   },
+   "random_hit": {
+    "1": 0.0014164305949008194,
+    "3": 0.004246280238434208,
+    "5": 0.007072114486942893,
+    "10": 0.014119132754982555,
+    "20": 0.028137880634352075,
+    "50": 0.06959181501878198,
+    "100": 0.13667400814723651
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14360",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3761,
+   "n_edges": 2500,
+   "n_cands": 1412,
+   "n_gold": 1,
+   "issue_chars": 753,
+   "n_src_files_edited": 1,
+   "n_anchors": 17,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.request_params_to_args"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 17,
+    "1": 33,
+    "2": 80,
+    "3": 141
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 20,
+    "graph": 81,
+    "embedding": 338,
+    "tfidf+graph": 13,
+    "hybrid": 46
+   },
+   "random_hit": {
+    "1": 0.0007082152974504652,
+    "3": 0.0021246458923512845,
+    "5": 0.003541076487252104,
+    "10": 0.007082152974504208,
+    "20": 0.014164305949008527,
+    "50": 0.03541076487252126,
+    "100": 0.07082152974504252
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14356",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3750,
+   "n_edges": 2492,
+   "n_cands": 1412,
+   "n_gold": 1,
+   "issue_chars": 1481,
+   "n_src_files_edited": 1,
+   "n_anchors": 16,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.request_params_to_args"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 16,
+    "1": 57,
+    "2": 92,
+    "3": 162
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 68,
+    "graph": 107,
+    "embedding": 181,
+    "tfidf+graph": 66,
+    "hybrid": 77
+   },
+   "random_hit": {
+    "1": 0.0007082152974504652,
+    "3": 0.0021246458923512845,
+    "5": 0.003541076487252104,
+    "10": 0.007082152974504208,
+    "20": 0.014164305949008527,
+    "50": 0.03541076487252126,
+    "100": 0.07082152974504252
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_5624",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3715,
+   "n_edges": 2478,
+   "n_cands": 1410,
+   "n_gold": 1,
+   "issue_chars": 63,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_dependant"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 9,
+    "embedding": 100,
+    "tfidf+graph": 9,
+    "hybrid": 8
+   },
+   "random_hit": {
+    "1": 0.0007092198581559739,
+    "3": 0.0021276595744680327,
+    "5": 0.0035460992907800915,
+    "10": 0.007092198581560294,
+    "20": 0.014184397163120588,
+    "50": 0.03546099290780147,
+    "100": 0.07092198581560283
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14419",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3717,
+   "n_edges": 2478,
+   "n_cands": 1410,
+   "n_gold": 3,
+   "issue_chars": 689,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant.cache_key",
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.dependencies.utils.get_parameterless_sub_dependant"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 2,
+    "3": 2
+   },
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 4,
+    "embedding": 265,
+    "tfidf+graph": 3,
+    "hybrid": 9
+   },
+   "random_hit": {
+    "1": 0.0021276595744680327,
+    "3": 0.006373920572089076,
+    "5": 0.010608118334333172,
+    "10": 0.021140948695385964,
+    "20": 0.04198181797590239,
+    "50": 0.10272539889327104,
+    "100": 0.19816330806517368
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14301",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3677,
+   "n_edges": 2436,
+   "n_cands": 1390,
+   "n_gold": 1,
+   "issue_chars": 739,
+   "n_src_files_edited": 1,
+   "n_anchors": 9,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_parameterless_sub_dependant"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 9,
+    "1": 27,
+    "2": 85,
+    "3": 127
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0007194244604316058,
+    "3": 0.0021582733812949284,
+    "5": 0.003597122302158251,
+    "10": 0.007194244604316502,
+    "20": 0.014388489208633115,
+    "50": 0.03597122302158273,
+    "100": 0.07194244604316546
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14262",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3630,
+   "n_edges": 2390,
+   "n_cands": 1382,
+   "n_gold": 10,
+   "issue_chars": 2437,
+   "n_src_files_edited": 7,
+   "n_anchors": 6,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.dependencies.models.Dependant.__post_init__",
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.dependencies.utils.get_flat_dependant",
+    "fastapi.dependencies.utils.is_coroutine_callable",
+    "fastapi.exceptions.ValidationException.__init__",
+    "fastapi.param_functions.Depends",
+    "fastapi.params.Depends",
+    "fastapi.routing.APIWebSocketRoute.__init__",
+    "fastapi.routing.request_response",
+    "fastapi.routing.websocket_session"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 6,
+    "1": 8,
+    "2": 25,
+    "3": 37
+   },
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 8,
+    "graph": 2,
+    "embedding": 3,
+    "tfidf+graph": 2,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.00723589001447178,
+    "3": 0.02156647416673585,
+    "5": 0.035710612687971266,
+    "10": 0.07026937600755878,
+    "20": 0.13606309328084598,
+    "50": 0.3090788333113469,
+    "100": 0.5293571374060242
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14266",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3627,
+   "n_edges": 2390,
+   "n_cands": 1382,
+   "n_gold": 1,
+   "issue_chars": 247,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_dependant"
+   ],
+   "min_hop": 5,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 30,
+    "3": 62
+   },
+   "gold_degree": 6,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 250,
+    "graph": 139,
+    "embedding": 342,
+    "tfidf+graph": 186,
+    "hybrid": 225
+   },
+   "random_hit": {
+    "1": 0.0007235890014472002,
+    "3": 0.0021707670043414895,
+    "5": 0.00361794500723589,
+    "10": 0.00723589001447178,
+    "20": 0.01447178002894356,
+    "50": 0.0361794500723589,
+    "100": 0.0723589001447178
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14246",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3619,
+   "n_edges": 2392,
+   "n_cands": 1387,
+   "n_gold": 1,
+   "issue_chars": 273,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.get_definitions"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 193,
+    "graph": 193,
+    "embedding": 682,
+    "tfidf+graph": 193,
+    "hybrid": 250
+   },
+   "random_hit": {
+    "1": 0.0007209805335256503,
+    "3": 0.00216294160057684,
+    "5": 0.0036049026676280294,
+    "10": 0.007209805335255948,
+    "20": 0.014419610670511895,
+    "50": 0.03604902667627974,
+    "100": 0.07209805335255948
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14186",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3601,
+   "n_edges": 2384,
+   "n_cands": 1369,
+   "n_gold": 24,
+   "issue_chars": 1009,
+   "n_src_files_edited": 10,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.main._get_model_config",
+    "fastapi._compat.main._is_error_wrapper",
+    "fastapi._compat.main._is_model_class",
+    "fastapi._compat.main._is_model_field",
+    "fastapi._compat.main._is_undefined",
+    "fastapi._compat.main._model_rebuild",
+    "fastapi._compat.main.copy_field_info",
+    "fastapi._compat.main.create_body_model",
+    "fastapi._compat.main.get_compat_model_name_map",
+    "fastapi._compat.main.get_definitions",
+    "fastapi._compat.main.is_bytes_field",
+    "fastapi._compat.main.is_bytes_sequence_field",
+    "fastapi._compat.main.is_scalar_field",
+    "fastapi._compat.main.is_scalar_sequence_field",
+    "fastapi._compat.main.is_sequence_field",
+    "fastapi._compat.shared._annotation_is_complex",
+    "fastapi._compat.shared.annotation_is_pydantic_v1",
+    "fastapi._compat.v1._normalize_errors",
+    "fastapi._compat.v2.ModelField.validate",
+    "fastapi.dependencies.utils._validate_value_with_model_field",
+    "fastapi.dependencies.utils.analyze_param",
+    "fastapi.encoders.jsonable_encoder",
+    "fastapi.utils.create_cloned_field",
+    "fastapi.utils.create_model_field"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 3,
+    "3": 3
+   },
+   "gold_degree": 29,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 24,
+    "graph": 27,
+    "embedding": 62,
+    "tfidf+graph": 24,
+    "hybrid": 23
+   },
+   "random_hit": {
+    "1": 0.01753104455807164,
+    "3": 0.05171363594403733,
+    "5": 0.08475482381911326,
+    "10": 0.16260100467854022,
+    "20": 0.29968927858155203,
+    "50": 0.5937119395673773,
+    "100": 0.8406275236620543
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_9425",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3250,
+   "n_edges": 2012,
+   "n_cands": 1273,
+   "n_gold": 1,
+   "issue_chars": 235,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_typed_annotation"
+   ],
+   "min_hop": 6,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 20,
+    "3": 26
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 75,
+    "embedding": 152,
+    "tfidf+graph": 20,
+    "hybrid": 38
+   },
+   "random_hit": {
+    "1": 0.0007855459544383603,
+    "3": 0.00235663786331497,
+    "5": 0.00392772977219169,
+    "10": 0.00785545954438338,
+    "20": 0.01571091908876665,
+    "50": 0.03927729772191668,
+    "100": 0.07855459544383347
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_13713",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3238,
+   "n_edges": 1988,
+   "n_cands": 1272,
+   "n_gold": 3,
+   "issue_chars": 756,
+   "n_src_files_edited": 2,
+   "n_anchors": 5,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.__init__",
+    "fastapi.applications.FastAPI.openapi",
+    "fastapi.openapi.utils.get_openapi"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 5,
+    "1": 28,
+    "2": 61,
+    "3": 110
+   },
+   "gold_degree": 9,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 30,
+    "graph": 14,
+    "embedding": 50,
+    "tfidf+graph": 12,
+    "hybrid": 24
+   },
+   "random_hit": {
+    "1": 0.002358490566037763,
+    "3": 0.007064340911930755,
+    "5": 0.011755369691135109,
+    "10": 0.023418250702125,
+    "20": 0.046468007800258615,
+    "50": 0.11343553980251075,
+    "100": 0.21795096282323256
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14077",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3238,
+   "n_edges": 1988,
+   "n_cands": 1272,
+   "n_gold": 1,
+   "issue_chars": 677,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.openapi.utils.get_openapi_path"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 22,
+    "2": 28,
+    "3": 57
+   },
+   "gold_degree": 10,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 6,
+    "graph": 30,
+    "embedding": 20,
+    "tfidf+graph": 10,
+    "hybrid": 4
+   },
+   "random_hit": {
+    "1": 0.0007861635220125507,
+    "3": 0.002358490566037763,
+    "5": 0.0039308176100628645,
+    "10": 0.00786163522012584,
+    "20": 0.01572327044025157,
+    "50": 0.03930817610062898,
+    "100": 0.07861635220125784
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3718",
+   "repo": "Textualize/rich",
+   "n_nodes": 1984,
+   "n_edges": 5668,
+   "n_cands": 1152,
+   "n_gold": 1,
+   "issue_chars": 749,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.panel.Panel.__rich_console__"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 3,
+    "1": 22,
+    "2": 93,
+    "3": 579
+   },
+   "gold_degree": 5,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 79,
+    "graph": 16,
+    "embedding": 90,
+    "tfidf+graph": 20,
+    "hybrid": 20
+   },
+   "random_hit": {
+    "1": 0.0008680555555555802,
+    "3": 0.0026041666666666297,
+    "5": 0.00434027777777779,
+    "10": 0.00868055555555558,
+    "20": 0.01736111111111116,
+    "50": 0.04340277777777779,
+    "100": 0.08680555555555558
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3934",
+   "repo": "Textualize/rich",
+   "n_nodes": 1998,
+   "n_edges": 5720,
+   "n_cands": 1155,
+   "n_gold": 2,
+   "issue_chars": 64,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.live.Live.stop",
+    "rich.live_render.LiveRender.__init__"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 22,
+    "graph": 22,
+    "embedding": 23,
+    "tfidf+graph": 22,
+    "hybrid": 11
+   },
+   "random_hit": {
+    "1": 0.0017316017316016952,
+    "3": 0.00519030363051165,
+    "5": 0.008643003443696728,
+    "10": 0.017248493851613422,
+    "20": 0.03434693556010715,
+    "50": 0.08474194782686983,
+    "100": 0.1657325920757463
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3953",
+   "repo": "Textualize/rich",
+   "n_nodes": 2012,
+   "n_edges": 5756,
+   "n_cands": 1158,
+   "n_gold": 2,
+   "issue_chars": 130,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.cells._cell_len",
+    "rich.cells.get_character_cell_size"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 325,
+    "graph": 325,
+    "embedding": 1098,
+    "tfidf+graph": 325,
+    "hybrid": 533
+   },
+   "random_hit": {
+    "1": 0.0017271157167529916,
+    "3": 0.005176868889973596,
+    "5": 0.008620651049480288,
+    "10": 0.017203983263248568,
+    "20": 0.03425869118364899,
+    "50": 0.08452716288776141,
+    "100": 0.16532244220431913
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3944",
+   "repo": "Textualize/rich",
+   "n_nodes": 2011,
+   "n_edges": 5754,
+   "n_cands": 1158,
+   "n_gold": 1,
+   "issue_chars": 63,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.cells.get_character_cell_size"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 995,
+    "graph": 995,
+    "embedding": 1088,
+    "tfidf+graph": 995,
+    "hybrid": 1111
+   },
+   "random_hit": {
+    "1": 0.0008635578583765513,
+    "3": 0.002590673575129543,
+    "5": 0.0043177892918825345,
+    "10": 0.008635578583765069,
+    "20": 0.01727115716753025,
+    "50": 0.04317789291882557,
+    "100": 0.08635578583765113
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3942",
+   "repo": "Textualize/rich",
+   "n_nodes": 2010,
+   "n_edges": 5756,
+   "n_cands": 1157,
+   "n_gold": 4,
+   "issue_chars": 54,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.markdown.Heading",
+    "rich.markdown.Heading.__rich_console__",
+    "rich.markdown.HorizontalRule.__rich_console__",
+    "rich.markdown.TableElement.__rich_console__"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 6,
+    "2": 35,
+    "3": 394
+   },
+   "gold_degree": 5,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 32,
+    "graph": 44,
+    "embedding": 3,
+    "tfidf+graph": 16,
+    "hybrid": 12
+   },
+   "random_hit": {
+    "1": 0.0034572169403630504,
+    "3": 0.010344750308204254,
+    "5": 0.017196519831278567,
+    "10": 0.03417029015887907,
+    "20": 0.06745730148021245,
+    "50": 0.16217153140822183,
+    "100": 0.3037695877165706
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3938",
+   "repo": "Textualize/rich",
+   "n_nodes": 2006,
+   "n_edges": 5742,
+   "n_cands": 1156,
+   "n_gold": 2,
+   "issue_chars": 89,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console.print",
+    "rich.segment.Segment.split_and_crop_lines"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 1,
+    "1": 5,
+    "2": 132,
+    "3": 248
+   },
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 253,
+    "embedding": 506,
+    "tfidf+graph": 26,
+    "hybrid": 51
+   },
+   "random_hit": {
+    "1": 0.0017301038062284002,
+    "3": 0.005185817642565094,
+    "5": 0.008635539777408274,
+    "10": 0.01723363142048262,
+    "20": 0.03431747030362953,
+    "50": 0.0846702317290553,
+    "100": 0.16559565002471577
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3882",
+   "repo": "Textualize/rich",
+   "n_nodes": 1986,
+   "n_edges": 5680,
+   "n_cands": 1152,
+   "n_gold": 1,
+   "issue_chars": 652,
+   "n_src_files_edited": 1,
+   "n_anchors": 7,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.prompt.PromptBase.on_validate_error"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 7,
+    "1": 23,
+    "2": 185,
+    "3": 338
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 4,
+    "graph": 2,
+    "embedding": 5,
+    "tfidf+graph": 2,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.0008680555555555802,
+    "3": 0.0026041666666666297,
+    "5": 0.00434027777777779,
+    "10": 0.00868055555555558,
+    "20": 0.01736111111111116,
+    "50": 0.04340277777777779,
+    "100": 0.08680555555555558
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3894",
+   "repo": "Textualize/rich",
+   "n_nodes": 1986,
+   "n_edges": 5680,
+   "n_cands": 1152,
+   "n_gold": 1,
+   "issue_chars": 1974,
+   "n_src_files_edited": 1,
+   "n_anchors": 10,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich._inspect.Inspect._get_signature"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 10,
+    "1": 26,
+    "2": 233,
+    "3": 389
+   },
+   "gold_degree": 3,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 4,
+    "graph": 29,
+    "embedding": 486,
+    "tfidf+graph": 7,
+    "hybrid": 15
+   },
+   "random_hit": {
+    "1": 0.0008680555555555802,
+    "3": 0.0026041666666666297,
+    "5": 0.00434027777777779,
+    "10": 0.00868055555555558,
+    "20": 0.01736111111111116,
+    "50": 0.04340277777777779,
+    "100": 0.08680555555555558
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3935",
+   "repo": "Textualize/rich",
+   "n_nodes": 2001,
+   "n_edges": 5730,
+   "n_cands": 1156,
+   "n_gold": 5,
+   "issue_chars": 75,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.table.Table.__rich_console__",
+    "rich.table.Table._calculate_column_widths",
+    "rich.table.Table._get_padding_width",
+    "rich.table.Table._measure_column",
+    "rich.table.Table._render"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 2,
+    "1": 5,
+    "2": 123,
+    "3": 273
+   },
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 9,
+    "embedding": 81,
+    "tfidf+graph": 6,
+    "hybrid": 10
+   },
+   "random_hit": {
+    "1": 0.004325259515570945,
+    "3": 0.01293087972637963,
+    "5": 0.021476894111518208,
+    "10": 0.042583187471707196,
+    "20": 0.08370319833476303,
+    "50": 0.19866119910938984,
+    "100": 0.3644149311823617
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3905",
+   "repo": "Textualize/rich",
+   "n_nodes": 2000,
+   "n_edges": 5726,
+   "n_cands": 1156,
+   "n_gold": 1,
+   "issue_chars": 1672,
+   "n_src_files_edited": 1,
+   "n_anchors": 17,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.progress.Progress.stop"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 17,
+    "1": 58,
+    "2": 292,
+    "3": 685
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 7,
+    "graph": 1,
+    "embedding": 6,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008650519031141446,
+    "3": 0.002595155709342545,
+    "5": 0.004325259515570945,
+    "10": 0.00865051903114189,
+    "20": 0.01730103806228378,
+    "50": 0.04325259515570934,
+    "100": 0.08650519031141868
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3930",
+   "repo": "Textualize/rich",
+   "n_nodes": 1986,
+   "n_edges": 5680,
+   "n_cands": 1152,
+   "n_gold": 2,
+   "issue_chars": 1224,
+   "n_src_files_edited": 26,
+   "n_anchors": 7,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.cells.chop_cells",
+    "rich.cells.get_character_cell_size"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 7,
+    "1": 17,
+    "2": 288,
+    "3": 461
+   },
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 20,
+    "graph": 467,
+    "embedding": 984,
+    "tfidf+graph": 70,
+    "hybrid": 119
+   },
+   "random_hit": {
+    "1": 0.0017361111111111605,
+    "3": 0.0052038082826527665,
+    "5": 0.008665472053287049,
+    "10": 0.017293235350902547,
+    "20": 0.03443563567911956,
+    "50": 0.08495782652765715,
+    "100": 0.16614477748817458
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "httpx_3672",
+   "repo": "encode/httpx",
+   "n_nodes": 740,
+   "n_edges": 1618,
+   "n_cands": 596,
+   "n_gold": 11,
+   "issue_chars": 243,
+   "n_src_files_edited": 7,
+   "n_anchors": 3,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "ahttpx._parsers.HTTPParser.is_idle",
+    "httpx._network.NetworkServer.__exit__",
+    "httpx._network.NetworkServer.__init__",
+    "httpx._network.NetworkStream.__repr__",
+    "httpx._parsers.HTTPParser.close",
+    "httpx._parsers.HTTPParser.complete",
+    "httpx._pool.Connection._complete",
+    "httpx._pool.Connection.send",
+    "httpx._server.HTTPConnection._complete",
+    "httpx._server.HTTPConnection.handle_requests",
+    "httpx._server.HTTPServer.wait"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 3,
+    "1": 26,
+    "2": 35,
+    "3": 145
+   },
+   "gold_degree": 5,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 2,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.01845637583892612,
+    "3": 0.05444325381159176,
+    "5": 0.08922664968084648,
+    "10": 0.1711560111668371,
+    "20": 0.3152531766213027,
+    "50": 0.6218236196170348,
+    "100": 0.8698622094948331
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14791",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4330,
+   "n_edges": 2448,
+   "n_cands": 1174,
+   "n_gold": 0,
+   "issue_chars": 591,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_15800",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4401,
+   "n_edges": 2752,
+   "n_cands": 1017,
+   "n_gold": 10,
+   "issue_chars": 1236,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.api_route",
+    "fastapi.routing.APIRouter.__init__",
+    "fastapi.routing.APIRouter.add_websocket_route",
+    "fastapi.routing.APIRouter.get",
+    "fastapi.routing.APIRouter.route",
+    "fastapi.routing._IncludedRouter._build_effective_context",
+    "fastapi.routing._IncludedRouter.effective_candidates",
+    "fastapi.routing._RouterIncludeContext.path_for",
+    "fastapi.routing._get_fastapi_scope",
+    "fastapi.routing._iter_routes_with_context"
+   ],
+   "min_hop": 6,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 23,
+    "3": 38
+   },
+   "gold_degree": 4,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 7,
+    "graph": 94,
+    "embedding": 101,
+    "tfidf+graph": 5,
+    "hybrid": 32
+   },
+   "random_hit": {
+    "1": 0.009832841691248762,
+    "3": 0.029237905759186278,
+    "5": 0.04830003052464871,
+    "10": 0.09449022335871726,
+    "20": 0.1808675628088302,
+    "50": 0.39736382188282104,
+    "100": 0.6465122465217876
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15785",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4380,
+   "n_edges": 2708,
+   "n_cands": 1006,
+   "n_gold": 4,
+   "issue_chars": 1263,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.openapi.utils._get_api_route_for_openapi",
+    "fastapi.openapi.utils.get_openapi",
+    "fastapi.routing._IncludedRouter",
+    "fastapi.routing._iter_routes_with_context"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 23,
+    "3": 38
+   },
+   "gold_degree": 11,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 6,
+    "graph": 27,
+    "embedding": 286,
+    "tfidf+graph": 1,
+    "hybrid": 22
+   },
+   "random_hit": {
+    "1": 0.003976143141153132,
+    "3": 0.011892845815042574,
+    "5": 0.019762261183802976,
+    "10": 0.03923015491230808,
+    "20": 0.07729457634856907,
+    "50": 0.18472551475551757,
+    "100": 0.3425930828418212
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14371",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4487,
+   "n_edges": 2780,
+   "n_cands": 1474,
+   "n_gold": 7,
+   "issue_chars": 397,
+   "n_src_files_edited": 4,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.ModelField.alias",
+    "fastapi._compat.v2.get_schema_from_model_field",
+    "fastapi.dependencies.utils._get_multidict_value",
+    "fastapi.dependencies.utils.get_body_field",
+    "fastapi.dependencies.utils.request_params_to_args",
+    "fastapi.openapi.utils._get_openapi_operation_parameters",
+    "fastapi.params.Param.__init__"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 5,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 51,
+    "graph": 51,
+    "embedding": 49,
+    "tfidf+graph": 51,
+    "hybrid": 60
+   },
+   "random_hit": {
+    "1": 0.004748982360922693,
+    "3": 0.014188980418700536,
+    "5": 0.02355212674433438,
+    "10": 0.046627185447591035,
+    "20": 0.09137830959903281,
+    "50": 0.21500003897845232,
+    "100": 0.3890958863109978
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14605",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4597,
+   "n_edges": 2678,
+   "n_cands": 1226,
+   "n_gold": 7,
+   "issue_chars": 242,
+   "n_src_files_edited": 7,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.exceptions.RequestValidationError.__init__",
+    "fastapi.openapi.utils.generate_operation_id",
+    "fastapi.params.Param.__init__",
+    "fastapi.routing.APIRoute.__init__",
+    "fastapi.temp_pydantic_v1_params.Param.__init__",
+    "fastapi.utils.generate_operation_id_for_path"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 3,
+    "embedding": 9,
+    "tfidf+graph": 3,
+    "hybrid": 5
+   },
+   "random_hit": {
+    "1": 0.005709624796084833,
+    "3": 0.01704509209882976,
+    "5": 0.02826960940303691,
+    "10": 0.05585143039752605,
+    "20": 0.10900748462346799,
+    "50": 0.25337843168181595,
+    "100": 0.44960771405886557
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15763",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4377,
+   "n_edges": 2692,
+   "n_cands": 1006,
+   "n_gold": 1,
+   "issue_chars": 1064,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.routing.APIRouter.include_router"
+   ],
+   "min_hop": 7,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 23,
+    "3": 38
+   },
+   "gold_degree": 7,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 16,
+    "graph": 159,
+    "embedding": 280,
+    "tfidf+graph": 36,
+    "hybrid": 60
+   },
+   "random_hit": {
+    "1": 0.0009940357852882276,
+    "3": 0.0029821073558647937,
+    "5": 0.00497017892644136,
+    "10": 0.00994035785288272,
+    "20": 0.01988071570576544,
+    "50": 0.04970178926441349,
+    "100": 0.09940357852882709
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14583",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4264,
+   "n_edges": 2668,
+   "n_cands": 1230,
+   "n_gold": 2,
+   "issue_chars": 104,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils.get_dependant",
+    "fastapi.routing.APIRoute.__init__"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 13,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 151,
+    "graph": 151,
+    "embedding": 959,
+    "tfidf+graph": 151,
+    "hybrid": 220
+   },
+   "random_hit": {
+    "1": 0.001626016260162566,
+    "3": 0.004874079660243336,
+    "5": 0.00811685089999803,
+    "10": 0.016200625797958557,
+    "20": 0.032268947587767216,
+    "50": 0.07968008890829348,
+    "100": 0.15605257761283875
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_15745",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4287,
+   "n_edges": 2490,
+   "n_cands": 976,
+   "n_gold": 14,
+   "issue_chars": 4304,
+   "n_src_files_edited": 3,
+   "n_anchors": 9,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.applications.FastAPI.__init__",
+    "fastapi.applications.FastAPI.openapi",
+    "fastapi.openapi.utils.generate_operation_id",
+    "fastapi.openapi.utils.generate_operation_summary",
+    "fastapi.openapi.utils.get_fields_from_routes",
+    "fastapi.openapi.utils.get_openapi",
+    "fastapi.openapi.utils.get_openapi_path",
+    "fastapi.routing.APIRoute.__init__",
+    "fastapi.routing.APIRouter.__init__",
+    "fastapi.routing.APIRouter.add_api_route",
+    "fastapi.routing.APIRouter.add_api_websocket_route",
+    "fastapi.routing.APIRouter.get",
+    "fastapi.routing.APIRouter.include_router",
+    "fastapi.routing.APIWebSocketRoute.__init__"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 9,
+    "1": 60,
+    "2": 108,
+    "3": 170
+   },
+   "gold_degree": 13,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 3,
+    "embedding": 6,
+    "tfidf+graph": 3,
+    "hybrid": 3
+   },
+   "random_hit": {
+    "1": 0.014344262295082011,
+    "3": 0.0424613727404316,
+    "5": 0.06983217371799355,
+    "10": 0.13511330154067536,
+    "20": 0.25310776959341064,
+    "50": 0.5235152443215634,
+    "100": 0.7821828676789083
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14297",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3757,
+   "n_edges": 2492,
+   "n_cands": 1412,
+   "n_gold": 1,
+   "issue_chars": 1219,
+   "n_src_files_edited": 1,
+   "n_anchors": 11,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi._compat.v2.serialize_sequence_value"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 11,
+    "1": 41,
+    "2": 97,
+    "3": 154
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 24,
+    "graph": 389,
+    "embedding": 438,
+    "tfidf+graph": 67,
+    "hybrid": 97
+   },
+   "random_hit": {
+    "1": 0.0007082152974504652,
+    "3": 0.0021246458923512845,
+    "5": 0.003541076487252104,
+    "10": 0.007082152974504208,
+    "20": 0.014164305949008527,
+    "50": 0.03541076487252126,
+    "100": 0.07082152974504252
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14303",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3745,
+   "n_edges": 2492,
+   "n_cands": 1412,
+   "n_gold": 0,
+   "issue_chars": 2644,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_13537",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3743,
+   "n_edges": 2492,
+   "n_cands": 1412,
+   "n_gold": 0,
+   "issue_chars": 1650,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "fastapi_14953",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4094,
+   "n_edges": 2320,
+   "n_cands": 914,
+   "n_gold": 1,
+   "issue_chars": 1775,
+   "n_src_files_edited": 3,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.datastructures.UploadFile.__get_pydantic_json_schema__"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 2,
+    "1": 4,
+    "2": 32,
+    "3": 66
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 320,
+    "embedding": 23,
+    "tfidf+graph": 21,
+    "hybrid": 6
+   },
+   "random_hit": {
+    "1": 0.001094091903719896,
+    "3": 0.003282275711159688,
+    "5": 0.005470459518599591,
+    "10": 0.01094091903719907,
+    "20": 0.021881838074398252,
+    "50": 0.054704595185995575,
+    "100": 0.10940919037199126
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_13786",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3698,
+   "n_edges": 2456,
+   "n_cands": 1397,
+   "n_gold": 7,
+   "issue_chars": 5328,
+   "n_src_files_edited": 4,
+   "n_anchors": 18,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "fastapi.security.api_key.APIKeyBase.check_api_key",
+    "fastapi.security.api_key.APIKeyCookie.__init__",
+    "fastapi.security.api_key.APIKeyHeader.__init__",
+    "fastapi.security.api_key.APIKeyQuery.__init__",
+    "fastapi.security.http.HTTPBase.__init__",
+    "fastapi.security.http.HTTPBasic",
+    "fastapi.security.http.HTTPDigest"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 18,
+    "1": 36,
+    "2": 58,
+    "3": 90
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 13,
+    "graph": 7,
+    "embedding": 11,
+    "tfidf+graph": 8,
+    "hybrid": 8
+   },
+   "random_hit": {
+    "1": 0.005010737294201872,
+    "3": 0.014967680712473563,
+    "5": 0.024839096066212485,
+    "10": 0.04914746398798431,
+    "20": 0.09620981433517495,
+    "50": 0.22561803917648748,
+    "100": 0.4061182006230025
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_14616",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 4354,
+   "n_edges": 2468,
+   "n_cands": 1175,
+   "n_gold": 1,
+   "issue_chars": 1176,
+   "n_src_files_edited": 1,
+   "n_anchors": 6,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "fastapi.dependencies.utils._get_multidict_value"
+   ],
+   "min_hop": 5,
+   "hood": {
+    "0": 6,
+    "1": 37,
+    "2": 69,
+    "3": 111
+   },
+   "gold_degree": 2,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 23,
+    "graph": 171,
+    "embedding": 163,
+    "tfidf+graph": 47,
+    "hybrid": 66
+   },
+   "random_hit": {
+    "1": 0.0008510638297872797,
+    "3": 0.002553191489361728,
+    "5": 0.004255319148936176,
+    "10": 0.008510638297872353,
+    "20": 0.017021276595744705,
+    "50": 0.04255319148936165,
+    "100": 0.08510638297872342
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "fastapi_11194",
+   "repo": "fastapi/fastapi",
+   "n_nodes": 3255,
+   "n_edges": 2014,
+   "n_cands": 1273,
+   "n_gold": 0,
+   "issue_chars": 617,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "requests_6757",
+   "repo": "psf/requests",
+   "n_nodes": 730,
+   "n_edges": 1812,
+   "n_cands": 288,
+   "n_gold": 1,
+   "issue_chars": 268,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.utils.super_len"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 12,
+    "graph": 12,
+    "embedding": 157,
+    "tfidf+graph": 12,
+    "hybrid": 16
+   },
+   "random_hit": {
+    "1": 0.00347222222222221,
+    "3": 0.01041666666666663,
+    "5": 0.01736111111111116,
+    "10": 0.03472222222222221,
+    "20": 0.06944444444444442,
+    "50": 0.17361111111111116,
+    "100": 0.3472222222222222
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_6629",
+   "repo": "psf/requests",
+   "n_nodes": 712,
+   "n_edges": 1750,
+   "n_cands": 283,
+   "n_gold": 1,
+   "issue_chars": 836,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.exceptions.JSONDecodeError.__init__"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 2,
+    "1": 6,
+    "2": 31,
+    "3": 59
+   },
+   "gold_degree": 1,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 3,
+    "embedding": 30,
+    "tfidf+graph": 2,
+    "hybrid": 4
+   },
+   "random_hit": {
+    "1": 0.0035335689045936647,
+    "3": 0.010600706713780883,
+    "5": 0.017667844522968212,
+    "10": 0.035335689045936425,
+    "20": 0.07067137809187274,
+    "50": 0.176678445229682,
+    "100": 0.3533568904593639
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_6644",
+   "repo": "psf/requests",
+   "n_nodes": 714,
+   "n_edges": 1754,
+   "n_cands": 284,
+   "n_gold": 1,
+   "issue_chars": 295,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "requests.adapters.HTTPAdapter.request_url"
+   ],
+   "min_hop": 5,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 17,
+    "3": 24
+   },
+   "gold_degree": 3,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 23,
+    "graph": 58,
+    "embedding": 221,
+    "tfidf+graph": 24,
+    "hybrid": 47
+   },
+   "random_hit": {
+    "1": 0.0035211267605633756,
+    "3": 0.010563380281690127,
+    "5": 0.017605633802816878,
+    "10": 0.035211267605633756,
+    "20": 0.07042253521126762,
+    "50": 0.176056338028169,
+    "100": 0.352112676056338
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_6589",
+   "repo": "psf/requests",
+   "n_nodes": 712,
+   "n_edges": 1750,
+   "n_cands": 283,
+   "n_gold": 1,
+   "issue_chars": 237,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "requests.utils.super_len"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 5,
+    "3": 21
+   },
+   "gold_degree": 14,
+   "median_degree": 1.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0035335689045936647,
+    "3": 0.010600706713780883,
+    "5": 0.017667844522968212,
+    "10": 0.035335689045936425,
+    "20": 0.07067137809187274,
+    "50": 0.176678445229682,
+    "100": 0.3533568904593639
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "requests_6592",
+   "repo": "psf/requests",
+   "n_nodes": 711,
+   "n_edges": 1748,
+   "n_cands": 283,
+   "n_gold": 0,
+   "issue_chars": 239,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_3180",
+   "repo": "Textualize/rich",
+   "n_nodes": 1936,
+   "n_edges": 5516,
+   "n_cands": 1145,
+   "n_gold": 3,
+   "issue_chars": 1189,
+   "n_src_files_edited": 2,
+   "n_anchors": 6,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich._wrap.divide_line",
+    "rich._wrap.words",
+    "rich.cells.chop_cells"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 6,
+    "1": 13,
+    "2": 145,
+    "3": 327
+   },
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 89,
+    "graph": 392,
+    "embedding": 605,
+    "tfidf+graph": 207,
+    "hybrid": 298
+   },
+   "random_hit": {
+    "1": 0.0026200873362445254,
+    "3": 0.007846524299434887,
+    "5": 0.013054671033559062,
+    "10": 0.025995228510443558,
+    "20": 0.051536006544086854,
+    "50": 0.12547171278216906,
+    "100": 0.23998291362387225
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3486",
+   "repo": "Textualize/rich",
+   "n_nodes": 1962,
+   "n_edges": 5594,
+   "n_cands": 1148,
+   "n_gold": 8,
+   "issue_chars": 98,
+   "n_src_files_edited": 3,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.syntax.Syntax",
+    "rich.syntax.Syntax._apply_stylized_ranges",
+    "rich.syntax.Syntax.stylize_range",
+    "rich.traceback.Frame",
+    "rich.traceback.Traceback._render_stack",
+    "rich.traceback.Traceback.extract",
+    "rich.traceback.bar",
+    "rich.traceback.error"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 1,
+    "1": 6,
+    "2": 108,
+    "3": 257
+   },
+   "gold_degree": 43,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 177,
+    "embedding": 339,
+    "tfidf+graph": 43,
+    "hybrid": 111
+   },
+   "random_hit": {
+    "1": 0.006968641114982632,
+    "3": 0.020778559728391044,
+    "5": 0.03442013975257363,
+    "10": 0.06779913325181208,
+    "20": 0.13154153588834983,
+    "50": 0.3004816678291452,
+    "100": 0.5187843073578426
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3777",
+   "repo": "Textualize/rich",
+   "n_nodes": 1979,
+   "n_edges": 5658,
+   "n_cands": 1149,
+   "n_gold": 2,
+   "issue_chars": 341,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console.__init__",
+    "rich.diagnose.report"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 97,
+    "3": 218
+   },
+   "gold_degree": 7,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 3,
+    "graph": 5,
+    "embedding": 776,
+    "tfidf+graph": 2,
+    "hybrid": 4
+   },
+   "random_hit": {
+    "1": 0.0017406440382942145,
+    "3": 0.005217383393528063,
+    "5": 0.008688057786956138,
+    "10": 0.01733820956262533,
+    "20": 0.03452479508010298,
+    "50": 0.08517480736165062,
+    "100": 0.1665590135946119
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3468",
+   "repo": "Textualize/rich",
+   "n_nodes": 1954,
+   "n_edges": 5574,
+   "n_cands": 1146,
+   "n_gold": 3,
+   "issue_chars": 146,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console._check_buffer",
+    "rich.console.Console.render_lines",
+    "rich.console.Console.render_str"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 12,
+    "graph": 12,
+    "embedding": 447,
+    "tfidf+graph": 12,
+    "hybrid": 14
+   },
+   "random_hit": {
+    "1": 0.002617801047120394,
+    "3": 0.00783968940362545,
+    "5": 0.013043319423209243,
+    "10": 0.02597272409110818,
+    "20": 0.05149178766545415,
+    "50": 0.12536698537750235,
+    "100": 0.23979215873177784
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3782",
+   "repo": "Textualize/rich",
+   "n_nodes": 1980,
+   "n_edges": 5660,
+   "n_cands": 1149,
+   "n_gold": 6,
+   "issue_chars": 68,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.syntax.Syntax",
+    "rich.syntax.Syntax.__init__",
+    "rich.syntax.Syntax.__rich_console__",
+    "rich.syntax.Syntax.__rich_measure__",
+    "rich.syntax.Syntax._get_syntax",
+    "rich.syntax.Syntax.guess_lexer"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 2,
+    "1": 31,
+    "2": 111,
+    "3": 548
+   },
+   "gold_degree": 43,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 2,
+    "embedding": 1,
+    "tfidf+graph": 2,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.005221932114882533,
+    "3": 0.015597644839437597,
+    "5": 0.025883016619962396,
+    "10": 0.05120533314563391,
+    "20": 0.10020677586989346,
+    "50": 0.23474320945893135,
+    "100": 0.42165036910603004
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3772",
+   "repo": "Textualize/rich",
+   "n_nodes": 1978,
+   "n_edges": 5654,
+   "n_cands": 1149,
+   "n_gold": 2,
+   "issue_chars": 131,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.traceback.Traceback.extract",
+    "rich.traceback.Traceback.from_exception"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 36,
+    "graph": 36,
+    "embedding": 228,
+    "tfidf+graph": 36,
+    "hybrid": 41
+   },
+   "random_hit": {
+    "1": 0.0017406440382942145,
+    "3": 0.005217383393528063,
+    "5": 0.008688057786956138,
+    "10": 0.01733820956262533,
+    "20": 0.03452479508010298,
+    "50": 0.08517480736165062,
+    "100": 0.1665590135946119
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3296",
+   "repo": "Textualize/rich",
+   "n_nodes": 1953,
+   "n_edges": 5568,
+   "n_cands": 1146,
+   "n_gold": 1,
+   "issue_chars": 818,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.syntax.Syntax.__rich_console__"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 3,
+    "1": 8,
+    "2": 104,
+    "3": 232
+   },
+   "gold_degree": 3,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 66,
+    "graph": 124,
+    "embedding": 520,
+    "tfidf+graph": 76,
+    "hybrid": 115
+   },
+   "random_hit": {
+    "1": 0.0008726003490401313,
+    "3": 0.002617801047120394,
+    "5": 0.004363001745200656,
+    "10": 0.008726003490401424,
+    "20": 0.017452006980802848,
+    "50": 0.04363001745200701,
+    "100": 0.08726003490401402
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": true,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3675",
+   "repo": "Textualize/rich",
+   "n_nodes": 1971,
+   "n_edges": 5630,
+   "n_cands": 1148,
+   "n_gold": 4,
+   "issue_chars": 168,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console.__init__",
+    "rich.console.Console.is_terminal",
+    "rich.console.group",
+    "rich.diagnose.report"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 7,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 7,
+    "graph": 7,
+    "embedding": 17,
+    "tfidf+graph": 7,
+    "hybrid": 6
+   },
+   "random_hit": {
+    "1": 0.0034843205574912606,
+    "3": 0.010425637659830955,
+    "5": 0.017330628706178075,
+    "10": 0.034435012445767854,
+    "20": 0.06797294694611855,
+    "50": 0.1633607585195026,
+    "100": 0.3058384902001503
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3676",
+   "repo": "Textualize/rich",
+   "n_nodes": 1970,
+   "n_edges": 5628,
+   "n_cands": 1148,
+   "n_gold": 5,
+   "issue_chars": 42,
+   "n_src_files_edited": 2,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.traceback.Stack",
+    "rich.traceback.Traceback.__rich_console__",
+    "rich.traceback.Traceback.extract",
+    "rich.traceback.Traceback.get_locals",
+    "rich.traceback._SyntaxError"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 9,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 75,
+    "graph": 75,
+    "embedding": 86,
+    "tfidf+graph": 75,
+    "hybrid": 98
+   },
+   "random_hit": {
+    "1": 0.004355400696864131,
+    "3": 0.013020675323310416,
+    "5": 0.02162551232197274,
+    "10": 0.04287526583347967,
+    "20": 0.08426712619531229,
+    "50": 0.19992715893386004,
+    "100": 0.36651694385398326
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3518",
+   "repo": "Textualize/rich",
+   "n_nodes": 1969,
+   "n_edges": 5624,
+   "n_cands": 1149,
+   "n_gold": 1,
+   "issue_chars": 658,
+   "n_src_files_edited": 1,
+   "n_anchors": 10,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.table.Table.add_row"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 10,
+    "1": 59,
+    "2": 264,
+    "3": 655
+   },
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008703220191470518,
+    "3": 0.0026109660574412663,
+    "5": 0.00435161009573537,
+    "10": 0.00870322019147085,
+    "20": 0.0174064403829417,
+    "50": 0.04351610095735425,
+    "100": 0.0870322019147084
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3535",
+   "repo": "Textualize/rich",
+   "n_nodes": 1970,
+   "n_edges": 5628,
+   "n_cands": 1149,
+   "n_gold": 1,
+   "issue_chars": 193,
+   "n_src_files_edited": 2,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.segment.Segment.split_cells"
+   ],
+   "min_hop": 4,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 86,
+    "3": 204
+   },
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 206,
+    "embedding": 149,
+    "tfidf+graph": 22,
+    "hybrid": 29
+   },
+   "random_hit": {
+    "1": 0.0008703220191470518,
+    "3": 0.0026109660574412663,
+    "5": 0.00435161009573537,
+    "10": 0.00870322019147085,
+    "20": 0.0174064403829417,
+    "50": 0.04351610095735425,
+    "100": 0.0870322019147084
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3521",
+   "repo": "Textualize/rich",
+   "n_nodes": 1970,
+   "n_edges": 5628,
+   "n_cands": 1149,
+   "n_gold": 1,
+   "issue_chars": 80,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.segment.Segment._split_cells"
+   ],
+   "min_hop": 1,
+   "hood": {
+    "0": 2,
+    "1": 43,
+    "2": 102,
+    "3": 483
+   },
+   "gold_degree": 2,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 9,
+    "graph": 5,
+    "embedding": 60,
+    "tfidf+graph": 4,
+    "hybrid": 6
+   },
+   "random_hit": {
+    "1": 0.0008703220191470518,
+    "3": 0.0026109660574412663,
+    "5": 0.00435161009573537,
+    "10": 0.00870322019147085,
+    "20": 0.0174064403829417,
+    "50": 0.04351610095735425,
+    "100": 0.0870322019147084
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3506",
+   "repo": "Textualize/rich",
+   "n_nodes": 1964,
+   "n_edges": 5598,
+   "n_cands": 1148,
+   "n_gold": 1,
+   "issue_chars": 115,
+   "n_src_files_edited": 1,
+   "n_anchors": 6,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.segment.Segment._split_cells"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 6,
+    "1": 54,
+    "2": 270,
+    "3": 603
+   },
+   "gold_degree": 2,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 8,
+    "graph": 2,
+    "embedding": 3,
+    "tfidf+graph": 2,
+    "hybrid": 2
+   },
+   "random_hit": {
+    "1": 0.0008710801393728707,
+    "3": 0.002613240418118501,
+    "5": 0.004355400696864131,
+    "10": 0.008710801393728262,
+    "20": 0.017421602787456414,
+    "50": 0.04355400696864109,
+    "100": 0.08710801393728218
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3480",
+   "repo": "Textualize/rich",
+   "n_nodes": 1961,
+   "n_edges": 5592,
+   "n_cands": 1148,
+   "n_gold": 2,
+   "issue_chars": 81,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.text.Text.append",
+    "rich.text.Text.append_text"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 3,
+    "1": 8,
+    "2": 143,
+    "3": 250
+   },
+   "gold_degree": 3,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 20,
+    "graph": 3,
+    "embedding": 2,
+    "tfidf+graph": 7,
+    "hybrid": 4
+   },
+   "random_hit": {
+    "1": 0.0017421602787456303,
+    "3": 0.005221924183371862,
+    "5": 0.008695612550844611,
+    "10": 0.017353252994480428,
+    "20": 0.03455461756012501,
+    "50": 0.0852473806840447,
+    "100": 0.1666975506471966
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3472",
+   "repo": "Textualize/rich",
+   "n_nodes": 1959,
+   "n_edges": 5588,
+   "n_cands": 1148,
+   "n_gold": 1,
+   "issue_chars": 88,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.pretty._traverse"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 12,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 15,
+    "graph": 15,
+    "embedding": 293,
+    "tfidf+graph": 15,
+    "hybrid": 17
+   },
+   "random_hit": {
+    "1": 0.0008710801393728707,
+    "3": 0.002613240418118501,
+    "5": 0.004355400696864131,
+    "10": 0.008710801393728262,
+    "20": 0.017421602787456414,
+    "50": 0.04355400696864109,
+    "100": 0.08710801393728218
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3454",
+   "repo": "Textualize/rich",
+   "n_nodes": 1953,
+   "n_edges": 5572,
+   "n_cands": 1146,
+   "n_gold": 0,
+   "issue_chars": 865,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_3471",
+   "repo": "Textualize/rich",
+   "n_nodes": 1958,
+   "n_edges": 5582,
+   "n_cands": 1148,
+   "n_gold": 1,
+   "issue_chars": 86,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.text.Text.append_tokens"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 1,
+    "1": 2,
+    "2": 115,
+    "3": 224
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008710801393728707,
+    "3": 0.002613240418118501,
+    "5": 0.004355400696864131,
+    "10": 0.008710801393728262,
+    "20": 0.017421602787456414,
+    "50": 0.04355400696864109,
+    "100": 0.08710801393728218
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3470",
+   "repo": "Textualize/rich",
+   "n_nodes": 1958,
+   "n_edges": 5582,
+   "n_cands": 1148,
+   "n_gold": 1,
+   "issue_chars": 74,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.console.Console._write_buffer"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 91,
+    "3": 209
+   },
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 6,
+    "embedding": 64,
+    "tfidf+graph": 4,
+    "hybrid": 8
+   },
+   "random_hit": {
+    "1": 0.0008710801393728707,
+    "3": 0.002613240418118501,
+    "5": 0.004355400696864131,
+    "10": 0.008710801393728262,
+    "20": 0.017421602787456414,
+    "50": 0.04355400696864109,
+    "100": 0.08710801393728218
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3469",
+   "repo": "Textualize/rich",
+   "n_nodes": 1957,
+   "n_edges": 5578,
+   "n_cands": 1148,
+   "n_gold": 1,
+   "issue_chars": 75,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.markdown.Markdown.__rich_console__"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 5,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 933,
+    "graph": 933,
+    "embedding": 560,
+    "tfidf+graph": 933,
+    "hybrid": 956
+   },
+   "random_hit": {
+    "1": 0.0008710801393728707,
+    "3": 0.002613240418118501,
+    "5": 0.004355400696864131,
+    "10": 0.008710801393728262,
+    "20": 0.017421602787456414,
+    "50": 0.04355400696864109,
+    "100": 0.08710801393728218
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3052",
+   "repo": "Textualize/rich",
+   "n_nodes": 1936,
+   "n_edges": 5516,
+   "n_cands": 1145,
+   "n_gold": 4,
+   "issue_chars": 863,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.prompt.PromptBase.__init__",
+    "rich.prompt.PromptBase.ask",
+    "rich.prompt.PromptBase.check_choice",
+    "rich.prompt.PromptBase.process_response"
+   ],
+   "min_hop": 3,
+   "hood": {
+    "0": 3,
+    "1": 7,
+    "2": 110,
+    "3": 258
+   },
+   "gold_degree": 3,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 111,
+    "embedding": 81,
+    "tfidf+graph": 13,
+    "hybrid": 12
+   },
+   "random_hit": {
+    "1": 0.003493449781659441,
+    "3": 0.010452881941380388,
+    "5": 0.017375797692781636,
+    "10": 0.03452416696481797,
+    "20": 0.06814658436292953,
+    "50": 0.16376104234512134,
+    "100": 0.3065343222382442
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3278",
+   "repo": "Textualize/rich",
+   "n_nodes": 1952,
+   "n_edges": 5564,
+   "n_cands": 1146,
+   "n_gold": 0,
+   "issue_chars": 1216,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_2943",
+   "repo": "Textualize/rich",
+   "n_nodes": 1949,
+   "n_edges": 5556,
+   "n_cands": 1146,
+   "n_gold": 1,
+   "issue_chars": 473,
+   "n_src_files_edited": 1,
+   "n_anchors": 2,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.style.Style.clear_meta_and_links"
+   ],
+   "min_hop": 2,
+   "hood": {
+    "0": 2,
+    "1": 5,
+    "2": 67,
+    "3": 161
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 2,
+    "graph": 6,
+    "embedding": 3,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0008726003490401313,
+    "3": 0.002617801047120394,
+    "5": 0.004363001745200656,
+    "10": 0.008726003490401424,
+    "20": 0.017452006980802848,
+    "50": 0.04363001745200701,
+    "100": 0.08726003490401402
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_2725",
+   "repo": "Textualize/rich",
+   "n_nodes": 1944,
+   "n_edges": 5542,
+   "n_cands": 1145,
+   "n_gold": 1,
+   "issue_chars": 1779,
+   "n_src_files_edited": 1,
+   "n_anchors": 1,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.table.Table._render"
+   ],
+   "min_hop": 5,
+   "hood": {
+    "0": 1,
+    "1": 3,
+    "2": 17,
+    "3": 58
+   },
+   "gold_degree": 6,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 175,
+    "embedding": 68,
+    "tfidf+graph": 13,
+    "hybrid": 12
+   },
+   "random_hit": {
+    "1": 0.0008733624454148048,
+    "3": 0.0026200873362445254,
+    "5": 0.004366812227074246,
+    "10": 0.008733624454148492,
+    "20": 0.017467248908296984,
+    "50": 0.04366812227074235,
+    "100": 0.0873362445414847
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3105",
+   "repo": "Textualize/rich",
+   "n_nodes": 1936,
+   "n_edges": 5516,
+   "n_cands": 1145,
+   "n_gold": 0,
+   "issue_chars": 452,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_3130",
+   "repo": "Textualize/rich",
+   "n_nodes": 1933,
+   "n_edges": 5504,
+   "n_cands": 1144,
+   "n_gold": 2,
+   "issue_chars": 878,
+   "n_src_files_edited": 1,
+   "n_anchors": 9,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.markdown.TableDataElement.create",
+    "rich.markdown.TableDataElement.on_text"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 9,
+    "1": 29,
+    "2": 213,
+    "3": 354
+   },
+   "gold_degree": 2,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 5,
+    "graph": 1,
+    "embedding": 1,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.0017482517482517723,
+    "3": 0.005240166657489498,
+    "5": 0.008725963450372909,
+    "10": 0.017413688673531214,
+    "20": 0.03467442443820401,
+    "50": 0.08553891427907179,
+    "100": 0.16725400583668304
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3043",
+   "repo": "Textualize/rich",
+   "n_nodes": 1926,
+   "n_edges": 5486,
+   "n_cands": 1144,
+   "n_gold": 0,
+   "issue_chars": 286,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_3067",
+   "repo": "Textualize/rich",
+   "n_nodes": 1933,
+   "n_edges": 5504,
+   "n_cands": 1144,
+   "n_gold": 0,
+   "issue_chars": 584,
+   "n_src_files_edited": 1,
+   "status": "no_gold"
+  },
+  {
+   "instance_id": "rich_3006",
+   "repo": "Textualize/rich",
+   "n_nodes": 1926,
+   "n_edges": 5486,
+   "n_cands": 1144,
+   "n_gold": 1,
+   "issue_chars": 677,
+   "n_src_files_edited": 1,
+   "n_anchors": 3,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.repr.auto_rich_repr"
+   ],
+   "min_hop": null,
+   "hood": {
+    "0": 3,
+    "1": 7,
+    "2": 177,
+    "3": 336
+   },
+   "gold_degree": 1,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 38,
+    "graph": 1045,
+    "embedding": 1118,
+    "tfidf+graph": 112,
+    "hybrid": 175
+   },
+   "random_hit": {
+    "1": 0.0008741258741258306,
+    "3": 0.002622377622377603,
+    "5": 0.004370629370629375,
+    "10": 0.00874125874125875,
+    "20": 0.0174825174825175,
+    "50": 0.04370629370629375,
+    "100": 0.0874125874125874
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3064",
+   "repo": "Textualize/rich",
+   "n_nodes": 1925,
+   "n_edges": 5482,
+   "n_cands": 1144,
+   "n_gold": 1,
+   "issue_chars": 76,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.markdown.TableElement.__rich_console__"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 2,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 27,
+    "graph": 27,
+    "embedding": 373,
+    "tfidf+graph": 27,
+    "hybrid": 43
+   },
+   "random_hit": {
+    "1": 0.0008741258741258306,
+    "3": 0.002622377622377603,
+    "5": 0.004370629370629375,
+    "10": 0.00874125874125875,
+    "20": 0.0174825174825175,
+    "50": 0.04370629370629375,
+    "100": 0.0874125874125874
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": true,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3063",
+   "repo": "Textualize/rich",
+   "n_nodes": 1924,
+   "n_edges": 5476,
+   "n_cands": 1144,
+   "n_gold": 1,
+   "issue_chars": 85,
+   "n_src_files_edited": 1,
+   "n_anchors": 0,
+   "gold_is_anchor": false,
+   "gold_ids": [
+    "rich.markup.escape"
+   ],
+   "min_hop": "no_anchor",
+   "gold_degree": 4,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 893,
+    "graph": 893,
+    "embedding": 732,
+    "tfidf+graph": 893,
+    "hybrid": 1001
+   },
+   "random_hit": {
+    "1": 0.0008741258741258306,
+    "3": 0.002622377622377603,
+    "5": 0.004370629370629375,
+    "10": 0.00874125874125875,
+    "20": 0.0174825174825175,
+    "50": 0.04370629370629375,
+    "100": 0.0874125874125874
+   },
+   "top1_module_hit": {
+    "tfidf": false,
+    "graph": false,
+    "embedding": false,
+    "tfidf+graph": false,
+    "hybrid": false
+   },
+   "status": "ok"
+  },
+  {
+   "instance_id": "rich_3061",
+   "repo": "Textualize/rich",
+   "n_nodes": 1920,
+   "n_edges": 5464,
+   "n_cands": 1142,
+   "n_gold": 12,
+   "issue_chars": 411,
+   "n_src_files_edited": 1,
+   "n_anchors": 4,
+   "gold_is_anchor": true,
+   "gold_ids": [
+    "rich.text.Span.right_crop",
+    "rich.text.Text",
+    "rich.text.Text.__init__",
+    "rich.text.Text.__rich_console__",
+    "rich.text.Text.append",
+    "rich.text.Text.append_text",
+    "rich.text.Text.append_tokens",
+    "rich.text.Text.assemble",
+    "rich.text.Text.divide",
+    "rich.text.Text.expand_tabs",
+    "rich.text.Text.from_ansi",
+    "rich.text.Text.highlight_regex"
+   ],
+   "min_hop": 0,
+   "hood": {
+    "0": 4,
+    "1": 118,
+    "2": 306,
+    "3": 735
+   },
+   "gold_degree": 194,
+   "median_degree": 2.0,
+   "emb_coverage": 1.0,
+   "rank": {
+    "tfidf": 1,
+    "graph": 1,
+    "embedding": 2,
+    "tfidf+graph": 1,
+    "hybrid": 1
+   },
+   "random_hit": {
+    "1": 0.010507880910682998,
+    "3": 0.0312206224413224,
+    "5": 0.051535226009374546,
+    "10": 0.10062534795327982,
+    "20": 0.19188981739976618,
+    "50": 0.417197744988115,
+    "100": 0.6688738087652555
+   },
+   "top1_module_hit": {
+    "tfidf": true,
+    "graph": true,
+    "embedding": true,
+    "tfidf+graph": true,
+    "hybrid": true
+   },
+   "status": "ok"
+  }
+ ]
+}

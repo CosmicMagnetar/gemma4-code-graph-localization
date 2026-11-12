@@ -21,7 +21,7 @@ This is a study of the 129 public tasks in the Gemma 4 Developer Agent competiti
 
 **Option A: Kaggle UI**
 1. Join https://www.kaggle.com/competitions/gemma-4-developer-agent.
-2. Open the public notebook: NOTEBOOK-LINK-TBD. Or create a new notebook from the competition's **Code** tab and import `analysis/localize.ipynb`.
+2. Open the public notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization. Or create a new notebook from the competition's **Code** tab and import `analysis/localize.ipynb`.
 3. Click **Run All**. It writes `/kaggle/working/results.json`.
 
 **Option B: Kaggle API**
