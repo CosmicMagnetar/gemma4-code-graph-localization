@@ -98,13 +98,23 @@ print("data root:", DATA_ROOT, " index root:", INDEX_ROOT)
 show_tree(INDEX_ROOT, depth=4)
 tasks = [json.loads(l) for l in open(TASKS_PATH) if l.strip()]
 GIDX, EIDX = index_files([INDEX_ROOT])
-if min(sum(t["instance_id"] in GIDX for t in tasks), sum(t["instance_id"] in EIDX for t in tasks)) < len(tasks) // 2:
+def data_key(t):
+    """Files are named <instance_id> or <repo_short>_<base_commit> (Kaggle keeps only the latter)."""
+    iid = t["instance_id"]
+    shorts = [t.get("repo", "").split("/")[-1].lower(), iid.rsplit("_", 1)[0]]
+    keys = [iid] + [f"{sh}_{t.get('base_commit', '')}" for sh in shorts]
+    for k in keys:
+        if k in GIDX:
+            return k
+    return iid
+if min(sum(data_key(t) in GIDX for t in tasks), sum(data_key(t) in EIDX for t in tasks)) < len(tasks) // 2:
     GIDX2, EIDX2 = index_files([extract_archives(INDEX_ROOT)])
     GIDX2.update(GIDX)
     EIDX2.update(EIDX)
     GIDX, EIDX = GIDX2, EIDX2
-n_g = sum(t["instance_id"] in GIDX for t in tasks)
-n_e = sum(t["instance_id"] in EIDX for t in tasks)
+KEY = {t["instance_id"]: data_key(t) for t in tasks}
+n_g = sum(KEY[t["instance_id"]] in GIDX for t in tasks)
+n_e = sum(KEY[t["instance_id"]] in EIDX for t in tasks)
 print(f"tasks={len(tasks)}  graphs found={n_g}  embeddings found={n_e}")
 if n_g < len(tasks) // 2:
     raise RuntimeError("Graph files not found for most tasks. Copy the folder tree printed above and send it.")
@@ -175,6 +185,7 @@ def path_to_module(path):
 
 # %%
 def load_graph(iid):
+    iid = KEY.get(iid, iid)
     if iid not in GIDX:
         raise FileNotFoundError(iid)
     p = GIDX[iid]
@@ -197,6 +208,7 @@ def load_graph(iid):
 
 
 def load_emb(iid, ids):
+    iid = KEY.get(iid, iid)
     if iid not in EIDX:
         return {}, 0
     z = np.load(EIDX[iid])
