@@ -42,14 +42,7 @@ All rankers order the same candidates: the non-test symbols, a median of 1,155 p
 
 Random hit@k is computed exactly as 1 − C(N−g, k)/C(N, k).
 
-| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR |
-|---|---|---|---|---|---|
-| TF-IDF (issue text) | 0.113 | **0.348** | **0.496** | **0.600** | 0.228 |
-| Embedding (provided vectors) | 0.113 | 0.243 | 0.278 | 0.339 | 0.170 |
-| Graph hops from anchors | **0.165** | 0.296 | 0.365 | 0.426 | 0.235 |
-| RRF: TF-IDF + graph | 0.157 | 0.330 | 0.426 | 0.557 | **0.257** |
-| RRF: all three | 0.148 | 0.296 | 0.383 | 0.522 | 0.234 |
-| Random (expected) | 0.003 | 0.015 | 0.029 | 0.056 | – |
+![Table 1. Function-level localization on 115 tasks: share of tasks with an edited symbol in the top k.](https://raw.githubusercontent.com/CosmicMagnetar/gemma4-code-graph-localization/main/figures/table1.png)
 
 *Table 1. Function-level localization on 115 tasks: share of tasks with an edited symbol in the top k.*
 
@@ -82,13 +75,7 @@ The idea is to let Gemma 4 read the repository once, offline, and leave behind a
 
 ## 6. TagTrail Results
 
-| Method | Hit@1 | Hit@5 | Hit@10 | Hit@20 | MRR | Top-1 in edited file |
-|---|---|---|---|---|---|---|
-| TF-IDF | 0.113 | 0.348 | 0.496 | 0.600 | 0.228 | 0.330 |
-| RRF: TF-IDF + graph | **0.157** | 0.330 | 0.426 | 0.557 | 0.257 | 0.383 |
-| TagTrail tags only | **0.157** | 0.374 | 0.426 | 0.470 | 0.241 | 0.383 |
-| RRF: TF-IDF + graph + TagTrail | 0.148 | 0.409 | 0.504 | 0.626 | **0.278** | **0.452** |
-| Control: Gemma-expanded TF-IDF | 0.122 | **0.435** | **0.583** | **0.687** | 0.262 | 0.374 |
+![Table 2. Function-level results on all 115 tasks.](https://raw.githubusercontent.com/CosmicMagnetar/gemma4-code-graph-localization/main/figures/table2.png)
 
 *Table 2. Function-level results on all 115 tasks.*
 
