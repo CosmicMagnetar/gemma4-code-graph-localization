@@ -135,7 +135,8 @@ Evaluation runs on a Kaggle CPU in about 2 minutes. Tagging runs on Kaggle with 
 
 - Evaluation notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-code-graph-localization
 - Tagging notebook: https://www.kaggle.com/code/cosmicmagnetar/gemma-4-read-once-tag-layer
-- Code and data: https://github.com/CosmicMagnetar/gemma4-code-graph-localization
+- Code: https://github.com/CosmicMagnetar/gemma4-code-graph-localization
+- Dataset: https://www.kaggle.com/datasets/cosmicmagnetar/tagtrail-gemma4-localization
 
 ```bash
 kaggle kernels push -p tagkg --accelerator NvidiaTeslaT4    # Gemma 4 tags -> kg_tags.json
